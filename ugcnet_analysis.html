@@ -1,0 +1,1361 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>UGC NET CS · JRF Bible</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#0a0d12;--card:#111620;--card2:#181f2a;--border:#1e2a3a;
+  --accent:#4f9eff;--green:#2ea043;--yellow:#d1a022;--red:#da3633;
+  --purple:#a371f7;--orange:#e06b1a;--cyan:#1abc9c;--pink:#ff6b8a;
+  --text:#cdd9e5;--muted:#636e7b;--dim:#2d3748;
+  --gold:#f5c518;--silver:#a8b2bd;
+  --fn:-apple-system,'Segoe UI',system-ui,sans-serif;
+  --mono:'Courier New',monospace;
+}
+body{background:var(--bg);color:var(--text);font-family:var(--fn);min-height:100vh;font-size:14px}
+a{color:var(--accent);text-decoration:none}
+/* ── Layout ── */
+.app{max-width:1140px;margin:0 auto;padding:14px}
+/* ── Header ── */
+.hdr{background:linear-gradient(135deg,#0d1829 0%,#0a0d12 70%);border:1px solid #1e3a5f;border-radius:14px;padding:20px 24px;margin-bottom:14px;position:relative;overflow:hidden}
+.hdr::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 80% 50%,rgba(79,158,255,.06),transparent 60%);pointer-events:none}
+.hdr-row{display:flex;align-items:flex-start;justify-content:space-between;flex-wrap:wrap;gap:12px;position:relative}
+.hdr-title{font-size:1.5rem;font-weight:900;letter-spacing:-.5px;line-height:1.1}
+.hdr-title .hi{color:var(--accent)}
+.hdr-sub{font-size:.75rem;color:var(--muted);margin-top:5px;line-height:1.6}
+.badges{display:flex;gap:7px;flex-wrap:wrap;align-items:flex-start;margin-top:4px}
+.badge{border-radius:20px;padding:4px 11px;font-size:.7rem;font-weight:700;white-space:nowrap}
+.ba{background:rgba(79,158,255,.12);color:var(--accent);border:1px solid rgba(79,158,255,.3)}
+.bg{background:rgba(46,160,67,.12);color:var(--green);border:1px solid rgba(46,160,67,.3)}
+.bo{background:rgba(224,107,26,.12);color:var(--orange);border:1px solid rgba(224,107,26,.3)}
+.stats{display:grid;grid-template-columns:repeat(auto-fill,minmax(100px,1fr));gap:8px;margin-top:14px;position:relative}
+.stat{background:rgba(255,255,255,.03);border:1px solid var(--border);border-radius:9px;padding:10px 13px}
+.sv{font-size:1.35rem;font-weight:900;line-height:1}.sl{font-size:.62rem;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;margin-top:2px}
+/* ── Tabs ── */
+.tabs{display:flex;gap:2px;border-bottom:1px solid var(--border);margin-bottom:14px;overflow-x:auto;scrollbar-width:none;padding-bottom:0}
+.tabs::-webkit-scrollbar{display:none}
+.tabBtn{padding:9px 14px;cursor:pointer;font-size:.77rem;font-weight:600;white-space:nowrap;color:var(--muted);border:none;background:none;border-radius:8px 8px 0 0;transition:all .15s;letter-spacing:.1px}
+.tabBtn:hover{color:var(--text);background:var(--card2)}.tabBtn.on{color:var(--accent);background:var(--card2);border-bottom:2px solid var(--accent);margin-bottom:-1px}
+/* ── Panels ── */
+.panel{display:none}.panel.on{display:block}
+@keyframes slideIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+.panel.on{animation:slideIn .2s ease}
+/* ── Cards ── */
+.card{background:var(--card);border:1px solid var(--border);border-radius:11px;padding:16px;margin-bottom:10px}
+.card-h{background:var(--card2);border:1px solid var(--border);border-radius:11px;padding:16px;margin-bottom:10px;border-left:3px solid var(--accent)}
+.ct{font-size:.72rem;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.6px;margin-bottom:12px;display:flex;align-items:center;gap:7px}
+.ct::before{content:'';display:block;width:3px;height:12px;background:var(--accent);border-radius:2px}
+/* ── Grid ── */
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.g3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px}
+.g4{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+/* ── Insight ── */
+.ins{border-radius:9px;padding:13px 15px;margin-bottom:10px;border-left:3px solid}
+.ins.fire{background:#1a0e05;border-color:var(--orange)}.ins.tip{background:#050d1a;border-color:var(--accent)}
+.ins.warn{background:#1a0505;border-color:var(--red)}.ins.glow{background:#051a0d;border-color:var(--green)}
+.ins.purple{background:#0d051a;border-color:var(--purple)}.ins.gold{background:#1a1505;border-color:var(--gold)}
+.it{font-weight:800;font-size:.87rem;margin-bottom:5px}.ib{font-size:.78rem;color:#96a3b0;line-height:1.65}
+/* ── Law cards ── */
+.law{background:var(--card);border:1px solid var(--border);border-radius:11px;padding:15px;position:relative;overflow:hidden;margin-bottom:9px}
+.law::before{content:attr(data-num);position:absolute;right:12px;top:8px;font-size:3.5rem;font-weight:900;opacity:.04;line-height:1;color:var(--accent)}
+.law-num{display:inline-flex;align-items:center;justify-content:center;width:26px;height:26px;border-radius:50%;background:var(--accent);color:#fff;font-size:.75rem;font-weight:900;margin-bottom:7px;flex-shrink:0}
+.law-title{font-size:.9rem;font-weight:800;color:var(--accent);margin-bottom:5px}
+.law-body{font-size:.78rem;color:var(--muted);line-height:1.6}
+.law-impact{font-size:.7rem;font-weight:700;color:var(--gold);margin-top:7px}
+/* ── Efficiency table ── */
+.eff-table{width:100%;border-collapse:collapse;font-size:.75rem}
+.eff-table th{background:var(--card2);color:var(--muted);font-weight:700;padding:8px 12px;text-align:left;text-transform:uppercase;font-size:.67rem;letter-spacing:.5px;border-bottom:1px solid var(--border)}
+.eff-table td{padding:9px 12px;border-bottom:1px solid var(--border);vertical-align:middle}
+.eff-table tr:hover td{background:rgba(79,158,255,.04)}
+.eff-table tr:last-child td{border-bottom:none}
+.eff-tier-s{color:var(--gold);font-weight:900;font-size:.85rem}
+.eff-tier-a{color:var(--green);font-weight:700}
+.eff-tier-b{color:var(--accent);font-weight:600}
+.eff-tier-c{color:var(--muted)}
+.stars{color:var(--gold);letter-spacing:-1px}
+/* ── Bar chart ── */
+.bwrap{display:flex;flex-direction:column;gap:5px}
+.brow{display:flex;align-items:center;gap:8px}
+.blbl{font-size:.71rem;min-width:148px;text-align:right;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:var(--text)}
+.btrack{flex:1;height:16px;background:rgba(255,255,255,.04);border-radius:3px;overflow:hidden}
+.bfill{height:100%;border-radius:3px;display:flex;align-items:center;justify-content:flex-end;padding-right:5px;transition:width 1s ease;min-width:30px}
+.bnum{font-size:.64rem;font-weight:700;color:rgba(255,255,255,.85)}
+/* ── Heat map ── */
+.hmap{display:grid;grid-template-columns:repeat(auto-fill,minmax(110px,1fr));gap:7px}
+.hcell{border-radius:9px;padding:11px;cursor:pointer;transition:transform .15s}
+.hcell:hover{transform:translateY(-2px)}
+.hcn{font-size:.72rem;font-weight:700;margin-bottom:3px}.hcq{font-size:1.1rem;font-weight:900}.hcp{font-size:.64rem;opacity:.65;margin-top:1px}
+/* ── Confidence ── */
+.crow{display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--border)}
+.crow:last-child{border-bottom:none}
+.crank{font-size:.7rem;color:var(--muted);min-width:22px;font-weight:700}
+.cname{flex:1;font-size:.8rem;font-weight:600}
+.ctrack{width:100px;height:6px;background:rgba(255,255,255,.06);border-radius:3px;overflow:hidden}
+.cfill{height:100%;border-radius:3px;width:0;transition:width 1.3s ease}
+.cpct{font-size:.74rem;font-weight:800;min-width:33px;text-align:right}
+.ctag{font-size:.6rem;border-radius:4px;padding:2px 6px;font-weight:700}
+.sure{background:rgba(46,160,67,.15);color:var(--green);border:1px solid rgba(46,160,67,.3)}
+.high{background:rgba(224,107,26,.15);color:var(--orange);border:1px solid rgba(224,107,26,.3)}
+.mid{background:rgba(79,158,255,.15);color:var(--accent);border:1px solid rgba(79,158,255,.3)}
+/* ── Accordion ── */
+.acc{padding:11px;border:1px solid var(--border);border-radius:8px;margin-bottom:5px;cursor:pointer;transition:background .1s}
+.acc:hover,.acc.open{background:var(--card2)}.acc.open{border-color:var(--accent)}
+.acc-top{display:flex;align-items:center;gap:8px}
+.acc-name{flex:1;font-size:.82rem;font-weight:700}
+.acc-mhr{font-size:.67rem;font-weight:700;padding:2px 7px;border-radius:12px;border:1px solid;white-space:nowrap}
+.acc-heat{width:60px;height:4px;background:#2d3748;border-radius:2px;overflow:hidden}
+.acc-hf{height:100%;border-radius:2px}
+.acc-pct{font-size:.72rem;font-weight:800;min-width:28px;text-align:right}
+.acc-trend{font-size:.64rem;font-weight:700;padding:2px 5px;border-radius:4px}
+.tup{color:var(--green);background:rgba(46,160,67,.12)}.tdn{color:var(--red);background:rgba(218,54,51,.12)}.tst{color:var(--muted);background:var(--card2)}
+.dtag{font-size:.62rem;border-radius:3px;padding:2px 6px;font-weight:700;margin-left:4px}
+.deasy{background:rgba(46,160,67,.12);color:var(--green)}.dmed{background:rgba(209,160,34,.12);color:var(--yellow)}.dhard{background:rgba(224,107,26,.12);color:var(--orange)}
+.acc-body{display:none;margin-top:10px;padding-top:10px;border-top:1px solid var(--border)}
+.acc.open .acc-body{display:block}
+.subtags{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:8px}
+.stag{background:rgba(255,255,255,.03);border:1px solid var(--border);border-radius:4px;padding:3px 7px;font-size:.67rem;color:var(--muted)}
+.tip-box{background:rgba(79,158,255,.06);border:1px solid rgba(79,158,255,.2);border-radius:5px;padding:7px 10px;font-size:.72rem;color:#79c0ff}
+.prereq-box{background:rgba(167,113,247,.06);border:1px solid rgba(167,113,247,.2);border-radius:5px;padding:7px 10px;font-size:.7rem;color:#c084fc;margin-top:5px}
+/* ── Score sim ── */
+.sim-row{display:flex;align-items:center;gap:10px;padding:5px 0;border-bottom:1px solid rgba(255,255,255,.04)}
+.sim-lbl{font-size:.72rem;min-width:148px;padding-left:8px;line-height:1.3}
+.sim-marks{font-size:.65rem;color:var(--muted);display:block}
+.sim-pct{font-size:.72rem;font-weight:800;min-width:32px;text-align:right;color:var(--accent)}
+input[type=range]{-webkit-appearance:none;flex:1;height:4px;border-radius:2px;background:#2d3748;outline:none;cursor:pointer}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:14px;height:14px;border-radius:50%;background:var(--accent);cursor:pointer}
+/* ── Score box ── */
+.scorebox{background:var(--card2);border:1px solid var(--border);border-radius:12px;padding:20px;text-align:center}
+.score-num{font-size:3rem;font-weight:900;line-height:1;transition:color .3s}
+.score-track{height:7px;background:rgba(255,255,255,.06);border-radius:4px;margin-top:12px;position:relative;overflow:visible}
+.score-fill{height:100%;border-radius:4px;transition:width .6s ease}
+.score-line{position:absolute;top:-9px;bottom:-5px;width:2px;z-index:2}
+.score-lbl{position:absolute;top:-17px;font-size:.58rem;font-weight:700;transform:translateX(-50%);padding:1px 4px;border-radius:2px}
+.sg2{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:12px}
+.sg{text-align:center;background:rgba(255,255,255,.03);border-radius:7px;padding:8px}
+.sg-v{font-size:1.3rem;font-weight:900;color:var(--accent)}.sg-l{font-size:.62rem;color:var(--muted)}
+/* ── Flash cards ── */
+.fc-wrap{perspective:800px;height:195px;cursor:pointer;user-select:none;margin-bottom:12px}
+.fc-inner{width:100%;height:100%;position:relative;transform-style:preserve-3d;transition:transform .5s}
+.fc-inner.flipped{transform:rotateY(180deg)}
+.fc-face{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;border-radius:12px;display:flex;flex-direction:column;justify-content:center;align-items:center;padding:20px;text-align:center}
+.fc-front{background:var(--card2);border:1px solid var(--border)}
+.fc-back{background:var(--card);border:1px solid var(--accent);transform:rotateY(180deg)}
+.fc-cat{font-size:.62rem;font-weight:700;text-transform:uppercase;letter-spacing:.5px;margin-bottom:8px;opacity:.6}
+.fc-q{font-size:.88rem;font-weight:700;line-height:1.5}
+.fc-a{font-size:.8rem;line-height:1.65;font-family:var(--mono);text-align:left;white-space:pre-line;color:var(--cyan)}
+.fc-hint{font-size:.65rem;color:var(--muted);margin-top:6px}
+/* ── Tactics ── */
+.tgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:8px;margin-bottom:12px}
+.tbox{background:var(--card2);border:1px solid var(--border);border-radius:9px;padding:12px}
+.tbox-icon{font-size:1.4rem;margin-bottom:5px}
+.tbox-title{font-size:.74rem;font-weight:700;margin-bottom:2px}
+.tbox-val{font-size:.92rem;font-weight:900;color:var(--accent)}
+.tbox-sub{font-size:.65rem;color:var(--muted);margin-top:2px}
+/* ── Study plan ── */
+.dcard{background:var(--card2);border:1px solid var(--border);border-radius:9px;padding:13px;margin-bottom:7px;border-left:3px solid}
+.dcard-day{font-size:.64rem;font-weight:700;text-transform:uppercase;letter-spacing:.5px;margin-bottom:3px}
+.dcard-top{font-size:.9rem;font-weight:800;margin-bottom:7px}
+.ditems{display:flex;flex-wrap:wrap;gap:4px;margin-bottom:7px}
+.ditem{background:rgba(255,255,255,.04);border:1px solid var(--border);border-radius:4px;padding:3px 7px;font-size:.67rem;color:var(--muted)}
+.dmeta{display:flex;gap:14px;font-size:.7rem;color:var(--muted)}.dmeta b{color:var(--text)}
+/* ── Confusion matrix ── */
+.conf-pair{padding:9px 0;border-bottom:1px solid var(--border)}
+.conf-pair:last-child{border-bottom:none}
+.cf-wrong{font-size:.74rem;color:var(--red);text-decoration:line-through;margin-bottom:2px}
+.cf-right{font-size:.74rem;color:var(--green);font-weight:700;margin-bottom:2px}
+.cf-why{font-size:.68rem;color:var(--muted);font-style:italic}
+/* ── Prereq tree ── */
+.ptree{font-family:var(--mono);font-size:.72rem;color:var(--muted);line-height:1.8;background:rgba(255,255,255,.02);border-radius:7px;padding:12px;border:1px solid var(--border)}
+.ptree .hl{color:var(--accent);font-weight:700}
+.ptree .root{color:var(--gold);font-weight:900}
+/* ── Formula grid ── */
+.fgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:7px}
+.fcard{background:rgba(255,255,255,.025);border:1px solid var(--border);border-radius:7px;padding:9px 11px;font-size:.71rem;transition:border-color .15s}
+.fcard:hover{border-color:var(--accent)}
+.ftag{background:rgba(79,158,255,.12);border-radius:3px;padding:1px 5px;margin-right:5px;font-size:.61rem;color:var(--accent);font-weight:700}
+/* ── Prow ── */
+.prow{display:flex;align-items:center;gap:8px;padding:5px 0;border-bottom:1px solid var(--border)}
+.prow:last-child{border-bottom:none}.plbl{font-size:.74rem;flex:1}
+/* ── Chips ── */
+.chips{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:12px}
+.chip{padding:5px 11px;border-radius:20px;border:1px solid var(--border);font-size:.71rem;cursor:pointer;background:var(--card2);color:var(--muted);transition:all .15s}
+.chip.on{color:var(--text);background:var(--card);border-color:var(--accent)}
+/* ── Misc ── */
+.btn{background:var(--card2);border:1px solid var(--border);color:var(--text);border-radius:7px;padding:7px 16px;cursor:pointer;font-size:.8rem;transition:all .15s}
+.btn:hover{border-color:var(--accent);color:var(--accent)}.btn.on{border-color:var(--accent);color:var(--accent);background:rgba(79,158,255,.1)}
+.sep{height:1px;background:var(--border);margin:10px 0}
+.row{display:flex;align-items:center;gap:8px}.mt8{margin-top:8px}.mb8{margin-bottom:8px}
+.sm{font-size:.75rem}.xs{font-size:.7rem}.muted{color:var(--muted)}.bold{font-weight:700}
+@keyframes glow2{0%,100%{box-shadow:0 0 0 0 rgba(79,158,255,.15)}60%{box-shadow:0 0 0 8px rgba(79,158,255,0)}}
+.glowing{animation:glow2 3s infinite}
+@media(max-width:650px){.g2,.g3,.g4{grid-template-columns:1fr}.blbl{min-width:100px}.sim-lbl{min-width:110px}.ctrack{width:70px}.eff-table{font-size:.68rem}}
+</style>
+</head>
+<body>
+<div class="app">
+
+<div class="hdr glowing">
+  <div class="hdr-row">
+    <div>
+      <div class="hdr-title">UGC NET CS · <span class="hi">JRF Bible</span></div>
+      <div class="hdr-sub">The complete taxonomy for clearing JRF. 50 papers · 3,650+ questions · 13 subjects · 9 perspectives · Zero CDN · Works offline</div>
+    </div>
+    <div class="badges">
+      <span class="badge ba">50 Papers Analyzed</span>
+      <span class="badge bg">JRF Target: 205/300</span>
+      <span class="badge bo">86 Flash Cards</span>
+    </div>
+  </div>
+  <div class="stats">
+    <div class="stat"><div class="sv" style="color:var(--accent)">3,650+</div><div class="sl">Questions</div></div>
+    <div class="stat"><div class="sv" style="color:var(--text)">13</div><div class="sl">Subjects</div></div>
+    <div class="stat"><div class="sv" style="color:var(--gold)">7</div><div class="sl">Golden Topics</div></div>
+    <div class="stat"><div class="sv" style="color:var(--orange)">65%</div><div class="sl">JRF P-II Target</div></div>
+    <div class="stat"><div class="sv" style="color:var(--green)">97%</div><div class="sl">Banker's Confidence</div></div>
+    <div class="stat"><div class="sv" style="color:var(--cyan)">5.5×</div><div class="sl">Best ROI Topic</div></div>
+    <div class="stat"><div class="sv" style="color:var(--purple)">9</div><div class="sl">Perspectives</div></div>
+  </div>
+</div>
+
+<div class="tabs">
+  <button class="tabBtn on" data-tab="doctrine">🏛️ Doctrine</button>
+  <button class="tabBtn" data-tab="taxonomy">🧬 Taxonomy</button>
+  <button class="tabBtn" data-tab="oracle">🔮 Oracle</button>
+  <button class="tabBtn" data-tab="efficiency">⚡ ROI Matrix</button>
+  <button class="tabBtn" data-tab="simulator">🎯 Simulator</button>
+  <button class="tabBtn" data-tab="arsenal">🃏 Arsenal</button>
+  <button class="tabBtn" data-tab="warroom">⚔️ War Room</button>
+  <button class="tabBtn" data-tab="campaign">📅 Campaign</button>
+  <button class="tabBtn" data-tab="intel">📊 Intelligence</button>
+</div>
+
+<div id="tab-doctrine" class="panel on"></div>
+<div id="tab-taxonomy" class="panel"></div>
+<div id="tab-oracle" class="panel"></div>
+<div id="tab-efficiency" class="panel"></div>
+<div id="tab-simulator" class="panel"></div>
+<div id="tab-arsenal" class="panel"></div>
+<div id="tab-warroom" class="panel"></div>
+<div id="tab-campaign" class="panel"></div>
+<div id="tab-intel" class="panel"></div>
+</div>
+
+<script>
+
+// ════════ MASTER DATA ════════
+const SUBS=[
+  {id:'dsa',n:'Data Structures & Algorithms',s:'DSA',c:'#4f9eff',q:380,p:48,p2:11,p3:15,days:8,
+   prereq:'Arrays, Pointers, Basic Math',mhr:2.7,mhrTier:'A',
+   topics:[
+    {n:'Graph Algorithms',q:95,heat:97,diff:'Hard',min:2.5,trend:'+3%',mhr:2.7,
+     pre:['Graph representation (adj matrix/list)','Queue/Priority Queue','Union-Find (for Kruskal)'],
+     sub:['Dijkstra O(V² or ElogV) — greedy','Kruskal O(ElogE) — sort+union-find','Floyd-Warshall O(V³) — DP all pairs','BFS/DFS O(V+E) — traversals','Topological Sort — DFS finish order','Bellman-Ford O(VE) — negative edges'],
+     tip:'MST+shortest path GUARANTEED every paper. Practice 10+ examples of each.',
+     cf:'Prim vs Kruskal: both give MST but different approach (vertex-based vs edge-based)'},
+    {n:'Trees & Heaps',q:80,heat:92,diff:'Medium',min:2,trend:'+1%',mhr:2.1,
+     pre:['Recursion','BST property (left<root<right)'],
+     sub:['BST operations O(h) average','AVL rotations: LL,LR,RL,RR — height diff ≤1','B-Tree: degree t, min t-1 keys, max 2t-1','Heapify O(n) build trick','BST inorder = sorted ascending'],
+     tip:'B-tree disk pages = O(log_t n). AVL rotations: know all 4 cases.',
+     cf:'AVL vs Red-Black: AVL more balanced (strict), Red-Black faster inserts'},
+    {n:'Sorting Algorithms',q:75,heat:88,diff:'Medium',min:1.5,trend:'0%',mhr:2.0,
+     pre:['Array operations','Recurrence solving'],
+     sub:['Merge Sort Θ(n log n) all cases — stable','Quick Sort O(n²) worst — pivot matters','Heap Sort O(n log n) in-place — not stable','Radix Sort O(d(n+k)) — non-comparison','Lower bound Ω(n log n) for comparison-based'],
+     tip:'Lower bound proof uses decision tree height = Ω(n log n) — classic exam question.',
+     cf:'Merge Sort vs Quick Sort: Merge=stable+guaranteed O(n log n); Quick=in-place but O(n²) worst'},
+    {n:'Algorithm Complexity',q:70,heat:85,diff:'Hard',min:2,trend:'+4%',mhr:1.9,
+     pre:['Asymptotic notation (O,Ω,Θ)','Recurrence relations'],
+     sub:['Master Theorem: a=cases log_b a vs f(n)','Case 1: f(n)=O(n^(log_b a-ε)) → T=Θ(n^log_b a)','Case 2: f(n)=Θ(n^log_b a) → T=Θ(n^log_b a × log n)','Case 3: f(n)=Ω(n^(log_b a+ε)) → T=Θ(f(n))','NP vs NP-complete vs NP-hard: know the differences'],
+     tip:'Master Theorem CASE 2 catches most candidates — multiply by log n!',
+     cf:'NP ≠ NP-hard: NP-hard problems may not be in NP (can be harder than NP-complete)'},
+    {n:'Hashing & DP',q:60,heat:72,diff:'Medium',min:2,trend:'-1%',mhr:1.5,
+     pre:['Modular arithmetic','Array indexing'],
+     sub:['Double hashing: h(k,i)=(h1(k)+i×h2(k)) mod m','LCS dp table O(mn) — trace the table','Matrix Chain: O(n³) DP — optimal parenthesization','0/1 Knapsack O(nW) — pseudo-polynomial','Longest Increasing Subsequence O(n log n)'],
+     tip:'Double hashing formula is a guaranteed 2-marker every 3rd paper. Memorize it.',
+     cf:'LCS vs Longest Common Substring: LCS allows gaps; Substring is contiguous'},
+   ]},
+  {id:'toc',n:'Theory of Computation',s:'TOC',c:'#a371f7',q:280,p:44,p2:5,p3:14,days:6,
+   prereq:'Sets, Functions, Formal Language basics',mhr:2.1,mhrTier:'A',
+   topics:[
+    {n:'Regular Languages',q:90,heat:94,diff:'Hard',min:2.5,trend:'+2%',mhr:2.2,
+     pre:['Finite automata concept','Set operations'],
+     sub:['NFA→DFA: subset construction (2^n states worst)','DFA minimization: table-filling algorithm','Pumping lemma: pump to get contradiction on a^n b^n','Closed under: union,concat,star,complement,intersect,homomorphism','NOT closed under: nothing! Regular is closed under everything'],
+     tip:'NFA max DFA states = 2^|Q|. Pumping for a^n b^n — the standard proof.',
+     cf:'DFA vs NFA: same power (recognize same languages) but NFA can be exponentially smaller'},
+    {n:'Context-Free Languages',q:80,heat:91,diff:'Hard',min:3,trend:'+2%',mhr:2.0,
+     pre:['Regular languages','Grammar formalism','Stack data structure'],
+     sub:['CFG → PDA: stack simulates grammar derivation','Ambiguity: >1 leftmost derivation for SAME string','CNF: no unit productions, no ε-productions','Pumping lemma CFL: |vxy|≤m AND |vy|≥1','CFL NOT closed: intersection, complement, difference'],
+     tip:'PDA for a^n b^n MUST KNOW. |vy|≥1 is the critical CFL pumping condition.',
+     cf:'DCFL ⊂ CFL: palindromes are CFL but not DCFL (need non-determinism to find center)'},
+    {n:'Turing Machines & Decidability',q:55,heat:78,diff:'Hard',min:2,trend:'+1%',mhr:1.8,
+     pre:['CFL and PDA','Concept of decidability'],
+     sub:['Halting problem: undecidable by diagonalization','Recursive = decidable (TM always halts on all inputs)','RE = semi-decidable (TM accepts, may loop on reject)','Rice\'s theorem: all non-trivial RE properties undecidable','Recursive CLOSED under complement; RE is NOT'],
+     tip:'Recursive closed under complement is a frequent exam trap. RE is NOT closed.',
+     cf:'Recursive vs RE: Recursive=always halt; RE=halts on accept, may loop on reject'},
+    {n:'Chomsky Hierarchy',q:30,heat:70,diff:'Easy',min:1,trend:'0%',mhr:2.5,
+     pre:['All four language classes'],
+     sub:['Type 3: Regular → DFA/NFA (finite memory)','Type 2: CFL → PDA (stack memory)','Type 1: CSL → LBA (linear bounded memory)','Type 0: RE → TM (unlimited memory)','Proper subset chain: DCFL ⊂ CFL ⊂ CSL ⊂ REC ⊂ RE'],
+     tip:'LBA = Linear Bounded Automaton for CSL. The direction of ⊂ matters in every question.',
+     cf:'CSL vs Recursive: CSL ⊂ Recursive; CSL is a strict subset of decidable languages'},
+   ]},
+  {id:'os',n:'Operating Systems',s:'OS',c:'#2ea043',q:320,p:46,p2:8,p3:12,days:7,
+   prereq:'Process concept, Memory basics, Hardware interrupts',mhr:2.5,mhrTier:'S',
+   topics:[
+    {n:"Banker's Algorithm",q:65,heat:97,diff:'Hard',min:3,trend:'+1%',mhr:2.6,
+     pre:['Matrix operations','Resource allocation concept'],
+     sub:['Need = Max - Allocated','Available after process i finishes = Available + Alloc[i]','Safe state: exists completion sequence','Unsafe = NO safe sequence (not necessarily deadlocked)','4 Coffman conditions: mutual exclusion, hold-wait, no-preemption, circular-wait'],
+     tip:'Find safe sequence given allocation table — GUARANTEED every paper. 3 mins but sure 2 marks.',
+     cf:'Unsafe state ≠ Deadlock: Unsafe means deadlock is POSSIBLE, not that it has occurred'},
+    {n:'CPU Scheduling',q:85,heat:93,diff:'Medium',min:2,trend:'+1%',mhr:2.8,
+     pre:['Queue operations','Time concepts'],
+     sub:['FCFS: simple, convoy effect for long jobs','SJF: minimum average wait (non-preemptive)','SRTF: preemptive SJF — optimal for avg wait','Round Robin: fair but context switch overhead','Avg wait time = Avg TAT - Avg burst time','Priority scheduling: starvation → aging solves it'],
+     tip:'Avg waiting time calculation = Avg TAT - Avg burst. Always calculate BOTH values.',
+     cf:'SJF vs SRTF: SJF=non-preemptive (run to completion); SRTF=preemptive (switch if shorter arrives)'},
+    {n:'Memory Management',q:80,heat:91,diff:'Medium',min:2,trend:'+2%',mhr:2.4,
+     pre:['Virtual memory concept','Page table structure'],
+     sub:['EAT = h×Tc + (1-h)×(Tc+Tm) for READ with write-through','Page replacement: LRU (stack property!), FIFO (Belady!), OPT','Belady anomaly: FIFO only. LRU and OPT are stack algorithms.','TLB miss = access page table (extra mem access)','Demand paging: page brought only on fault'],
+     tip:"EAT formula with 75% reads and write-through is a classic 2-marker. Belady = FIFO ONLY.",
+     cf:"Write-through vs Write-back: Through=always update memory; Back=update on eviction"},
+    {n:'Synchronization & IPC',q:50,heat:80,diff:'Medium',min:1.5,trend:'0%',mhr:1.9,
+     pre:['Concurrency concept','Critical section problem'],
+     sub:['Semaphore: wait(P) and signal(V) — ATOMIC operations','Monitor: higher-level sync (Hoare\'s monitor)','Producer-consumer: bounded buffer solution','Deadlock prevention: deny ONE Coffman condition','Peterson\'s algorithm: software solution for 2 processes'],
+     tip:'Semaphore operations are wait and signal (P and V). Monitor is higher level than semaphore.',
+     cf:'Semaphore vs Monitor: Semaphore=low level, error-prone; Monitor=high level, safer'},
+    {n:'File Systems & Storage',q:40,heat:78,diff:'Medium',min:1.5,trend:'0%',mhr:2.0,
+     pre:['Tree data structures','Block allocation'],
+     sub:['Inode: 10 direct + 1 single + 1 double + 1 triple indirect','Max file = (10+256+256²+256³) × blocksize ≈ 16GB','Free block management: bitmap vs linked list','Disk scheduling: FCFS, SSTF (SSF), SCAN, C-SCAN, LOOK','C-SCAN: returns to 0 without serving (no Belady)'],
+     tip:'Unix inode max file formula — always there in Paper III. 256 pointers per block = 1024/4.',
+     cf:'SCAN vs C-SCAN: SCAN reverses; C-SCAN returns to start without serving (more uniform wait)'},
+   ]},
+  {id:'dbms',n:'Database Management Systems',s:'DBMS',c:'#e06b1a',q:300,p:45,p2:8,p3:10,days:6,
+   prereq:'Relational model basics, Set theory',mhr:2.6,mhrTier:'A',
+   topics:[
+    {n:'Normalization & FDs',q:95,heat:95,diff:'Medium',min:2,trend:'+1%',mhr:2.7,
+     pre:['Functional dependency concept','Relational algebra'],
+     sub:['1NF: atomic values, no repeating groups','2NF: no partial dependency on composite key','3NF: no transitive dependency on non-key attribute','BCNF: every determinant is superkey (STRICTER than 3NF)','FD closure A+ algorithm: apply rules iteratively','Lossless join: (R1∩R2)→R1 or (R1∩R2)→R2'],
+     tip:'Attribute closure algorithm step-by-step — exam gives FD set, you find candidate key.',
+     cf:'3NF vs BCNF: 3NF allows some anomalies (transitive deps via keys); BCNF eliminates all'},
+    {n:'SQL & Relational Algebra',q:70,heat:88,diff:'Medium',min:2,trend:'+3%',mhr:2.2,
+     pre:['Set operations','Relational model'],
+     sub:['INNER JOIN: only matching rows from both tables','FULL OUTER JOIN: all rows, NULL fills gaps','GROUP BY requires HAVING (not WHERE) for filtering','LIKE \'%pattern%\': SQL wildcard matching','Full join gives MORE tuples than inner join (always check)','Relational algebra: π(project), σ(select), ⋈(join)'],
+     tip:'Full Join vs Inner Join tuple count is a frequent trap. Count manually if unsure.',
+     cf:'WHERE vs HAVING: WHERE filters rows before grouping; HAVING filters groups after grouping'},
+    {n:'Keys & Candidate Keys',q:65,heat:87,diff:'Medium',min:2,trend:'+2%',mhr:2.1,
+     pre:['FDs','Attribute closure algorithm'],
+     sub:['Superkey: uniquely identifies (may have extra attributes)','Candidate key: MINIMAL superkey (no subset is also superkey)','Armstrong axioms: reflexivity, augmentation, transitivity','Find candidate key: test A+ for each attribute subset','FD inference: derive FDs from given set using closure'],
+     tip:'Find candidate key: compute closure of each subset. If closure = all attrs, it\'s a superkey. Check minimality.',
+     cf:'Primary key vs Candidate key: Primary key is CHOSEN candidate key; multiple candidate keys may exist'},
+    {n:'Transactions & Concurrency',q:40,heat:75,diff:'Hard',min:2,trend:'+1%',mhr:1.7,
+     pre:['ACID properties','Locking basics'],
+     sub:['2PL: PESSIMISTIC — locks everything before accessing','Timestamp ordering: OPTIMISTIC — no locks','Conflict serializability: check for cycles in precedence graph','Phantom read: insert/delete during range query (worst for isolation)','Recovery: UNDO (rollback uncommitted), REDO (redo committed)'],
+     tip:'2PL = PESSIMISTIC. Timestamp = OPTIMISTIC. This distinction is tested in every paper.',
+     cf:'View serializability vs Conflict: View is broader (more schedules); Conflict implies View'},
+   ]},
+  {id:'cn',n:'Computer Networks',s:'CN',c:'#1abc9c',q:260,p:42,p2:7,p3:7,days:5,
+   prereq:'Binary arithmetic, Basic electronics',mhr:2.1,mhrTier:'A',
+   topics:[
+    {n:'OSI & TCP/IP Layers',q:75,heat:88,diff:'Easy',min:1,trend:'+1%',mhr:3.5,
+     pre:['Layered architecture concept'],
+     sub:['Physical(1): bits, cables, hubs (no addressing)','DataLink(2): frames, MAC address, Switch, HDLC','Network(3): packets, IP, BGP routing','Transport(4): TCP(reliable) UDP(fast) — end-to-end','Application(7): HTTP,SMTP,FTP,DNS','IP+Port = Socket address','Fragment offset in IP header NOT TCP!'],
+     tip:'Fragment offset = IP header (network layer). BGP = routing protocol at network layer. Quick easy marks.',
+     cf:'TCP vs UDP: TCP=reliable ordered delivery; UDP=fast no guarantee. Use UDP for real-time'},
+    {n:'Routing & Protocols',q:65,heat:85,diff:'Medium',min:2,trend:'+2%',mhr:2.0,
+     pre:['Graph algorithms (Dijkstra)','IP addressing'],
+     sub:['Link-state: each router builds full topology (Dijkstra)','Distance vector: share tables with neighbors (Bellman-Ford)','Mesh links: n(n-1)/2 duplex','TDM bps = channels × bytes/sec × 8','Propagation time = distance / speed','Async: data + parity + start + stop bits total'],
+     tip:'TDM calculation and mesh link count = quick 2-marks. Propagation = distance/speed always.',
+     cf:'Link-state vs Distance-vector: Link-state=global view,faster convergence; DV=local view,slower'},
+    {n:'Security & Cryptography',q:55,heat:82,diff:'Hard',min:2.5,trend:'+5%',mhr:1.8,
+     pre:['Modular arithmetic','Number theory basics'],
+     sub:['RSA: n=p×q, φ(n)=(p-1)(q-1), e×d≡1 mod φ(n), C=M^e mod n','Public key: announced to ALL; Private key: receiver KEEPS secret','Trojan: legitimate function + hidden nefarious component','Virus: attaches to programs, spreads when programs copied','Worm: self-replicates via NETWORK, exploits vulnerabilities'],
+     tip:'RSA calculation every paper: verify e×d mod φ(n)=1 first, then C=M^e mod n.',
+     cf:'Trojan vs Virus vs Worm: Trojan=deception; Virus=attaches; Worm=network self-spread'},
+   ]},
+  {id:'co',n:'Computer Organization & Architecture',s:'CO',c:'#d1a022',q:240,p:40,p2:5,p3:8,days:5,
+   prereq:'Boolean algebra basics, Binary arithmetic',mhr:2.4,mhrTier:'A',
+   topics:[
+    {n:'Cache Memory & EAT',q:65,heat:87,diff:'Medium',min:2,trend:'+2%',mhr:4.0,
+     pre:['Memory hierarchy','Hit/miss concept'],
+     sub:['EAT(read) = h×Tc + (1-h)×(Tc+Tm)','EAT(write-through) = P_r×T_r + P_w×T_m (write always goes to mem)','Cache hit ratio improved by spatial/temporal locality','Virtual memory extends by secondary storage','EAT with TLB: (1-p)×(Tc+Tm) + p×(2Tc+2Tm) [approx]'],
+     tip:'EAT with write-through: 75% reads × T_read + 25% writes × T_mem = weighted average.',
+     cf:'Write-through vs Write-back: Through=memory always current; Back=memory may be stale'},
+    {n:'Boolean Algebra & K-map',q:65,heat:84,diff:'Medium',min:2,trend:'+1%',mhr:2.7,
+     pre:['Boolean operators AND,OR,NOT'],
+     sub:['K-map: group 1s in powers of 2 (1,2,4,8 cells)','SOP: sum of products (from 1-cells)','POS: product of sums (from 0-cells)','Consensus theorem: xy+x\'z+yz = xy+x\'z','De Morgan: (AB)\'=A\'+B\'; (A+B)\'=A\'B\''],
+     tip:'4×4 K-map SOP simplification appears 2-3 times per paper. Practice all cell groupings.',
+     cf:'SOP vs POS: SOP groups 1s; POS groups 0s. Both can simplify the same function'},
+    {n:'Number Systems',q:50,heat:76,diff:'Easy',min:0.7,trend:'-1%',mhr:5.5,
+     pre:['Place value notation'],
+     sub:['Binary→Octal: group 3 bits from right','Binary→Hex: group 4 bits from right','2\'s complement: invert all + 1 (addition-compatible!)','1\'s complement: just invert all bits','8085: TRAP>RST7.5>RST6.5>RST5.5>INTR (priority order)'],
+     tip:'Number conversion = < 1 minute per question. ALWAYS attempt these first in exam. Pure free marks.',
+     cf:'1\'s vs 2\'s complement: 2\'s complement has ONE zero (not two), better for arithmetic'},
+   ]},
+  {id:'prog',n:'Programming & OOP',s:'PROG',c:'#da3633',q:200,p:38,p2:6,p3:4,days:4,
+   prereq:'C programming basics, Object-oriented concepts',mhr:1.9,mhrTier:'B',
+   topics:[
+    {n:'OOP Concepts',q:70,heat:80,diff:'Easy',min:1,trend:'+2%',mhr:2.1,
+     pre:['Class and object concept'],
+     sub:['Virtual function: CANNOT be static (exam trap!)','Pure virtual: makes class abstract → cannot instantiate','Constructor: same name as class, NO return type','Public inheritance = subtype relationship (Liskov)','Friend function: access private but NOT a member','Polymorphism = inheritance + virtual functions + pointers'],
+     tip:'Virtual CANNOT be static — most common OOP trap. Pure virtual = abstract class = no instantiation.',
+     cf:'Abstract class vs Interface: Abstract can have implementation; Interface has none (pre-C++11)'},
+    {n:'C/C++ Features',q:80,heat:78,diff:'Medium',min:1.5,trend:'+2%',mhr:1.8,
+     pre:['C fundamentals','Pointer arithmetic'],
+     sub:['*ptr++ = *(ptr++) — postfix ++ has higher precedence than *','3D array addr: base + w×(y×z×p + z×q + r)',':: (scope resolution) NOT overloadable in C++','terminate() called when no exception handler found','sizeof determines size at COMPILE time'],
+     tip:'Address formula for 3D array and *ptr++ precedence — both appear regularly.',
+     cf:'*ptr++ vs (*ptr)++: First increments pointer; Second increments value at pointer'},
+   ]},
+  {id:'se',n:'Software Engineering',s:'SE',c:'#ff6b8a',q:180,p:36,p2:5,p3:4,days:3,
+   prereq:'Software development basics',mhr:2.0,mhrTier:'B',
+   topics:[
+    {n:'Software Testing',q:55,heat:78,diff:'Easy',min:1,trend:'+2%',mhr:2.5,
+     pre:['Software lifecycle'],
+     sub:['Order: Unit→Integration→System→Validation/Acceptance','Regression: after MAINTENANCE changes (not new features)','Black box: spec-based; White box: code-based (structural)','BVA: 4k+1 test cases for k input variables','Error→Fault→Failure: human mistake→defect in code→observable behavior'],
+     tip:'Testing ORDER and Regression testing purpose appear every 2 papers. Memorize the sequence.',
+     cf:'Alpha vs Beta testing: Alpha=developer site; Beta=customer site (actual use environment)'},
+    {n:'SDLC Models & Metrics',q:45,heat:70,diff:'Easy',min:1,trend:'+3%',mhr:2.2,
+     pre:['Project management basics'],
+     sub:['Waterfall: sequential, poor for changing requirements','Spiral: risk-driven, iterative cycles','Agile: NO separate testing phase after build!','CMM: Initial→Repeatable→Defined→Managed→Optimizing','FP = Count × (0.65 + 0.01×ΣFi) with n=14 VAF questions','Risk exposure = P(risk) × loss amount'],
+     tip:'Agile does NOT have separate testing phase — classic trap vs Waterfall. CMM has 5 levels.',
+     cf:'Spiral vs Incremental: Spiral=risk-driven; Incremental=deliver working software in parts'},
+    {n:'Software Quality & Config',q:40,heat:68,diff:'Easy',min:1,trend:'+2%',mhr:2.1,
+     pre:['Software architecture basics'],
+     sub:['SQA = "umbrella" activity (wraps around ALL activities)','Fan-in = count of modules calling module A','Temporal cohesion = grouped by TIME (not function)','Coupling: aim for loose coupling, high cohesion','Re-engineering: reorganize for maintainability (NOT full rewrite!)'],
+     tip:'SQA = umbrella activity — appears repeatedly. Fan-in=callers (IN), Fan-out=called (OUT).',
+     cf:'Fan-in vs Fan-out: Fan-in=how many call me (complexity of module); Fan-out=how many I call'},
+   ]},
+  {id:'dm',n:'Discrete Mathematics',s:'DM',c:'#79c0ff',q:220,p:38,p2:5,p3:5,days:4,
+   prereq:'High school math, Basic logic',mhr:1.9,mhrTier:'B',
+   topics:[
+    {n:'Combinatorics',q:60,heat:80,diff:'Medium',min:2,trend:'+1%',mhr:1.8,
+     pre:['Permutations and combinations'],
+     sub:['Stars & bars: C(n+k-1,k-1) for x1+...+xk=n (xi≥0)','With constraints: substitute yi=xi-ai to reduce to unconstrained','Pigeonhole: n+1 objects in n holes → ≥1 hole has ≥2','Derangements: D(n)=n!(1-1/1!+1/2!-...+(-1)^n/n!)','Multinomial: n!/(n1!×n2!×...×nk!) arrangements'],
+     tip:'Stars & bars WITH constraints appears almost every exam. Substitute yi=xi-lower_bound first.',
+     cf:'Permutation vs Combination: P(n,r)=ordered; C(n,r)=unordered. P=n!/(n-r)!; C=n!/r!(n-r)!'},
+    {n:'Logic & Proofs',q:65,heat:82,diff:'Easy',min:1.5,trend:'+1%',mhr:2.0,
+     pre:['Propositional logic'],
+     sub:['Modus ponens: P, P→Q ⊢ Q (affirming antecedent)','Modus tollens: ¬Q, P→Q ⊢ ¬P (denying consequent)','Vacuous proof: P is false → P→Q is VACUOUSLY true','Trivial proof: Q is true → P→Q true regardless','¬(∀x)F(x) = ∃x(¬F(x)) — de Morgan for quantifiers'],
+     tip:'Proof type identification: vacuous (P false), trivial (Q true) — 3 appearances per year.',
+     cf:'Modus ponens vs tollens: Ponens=affirm antecedent to get consequent; Tollens=deny consequent to deny antecedent'},
+    {n:'Graph Theory',q:55,heat:78,diff:'Medium',min:2,trend:'0%',mhr:1.7,
+     pre:['Graph representation','Basic graph traversal'],
+     sub:['Euler circuit: ALL vertices must have even degree','Euler path (not circuit): EXACTLY 2 vertices of odd degree','Hamilton: visit each vertex ONCE (no easy necessary+sufficient)','K4 IS planar; K5 and K3,3 are NOT (Kuratowski)','Bipartite: 2-colorable, no odd cycles, C6 IS bipartite'],
+     tip:'K4 IS planar — K5 is NOT. This distinction appears constantly. C6 (6-cycle) IS bipartite.',
+     cf:'Planar vs Non-planar: K4 is planar (can be drawn without crossings); K5 cannot'},
+   ]},
+  {id:'ai',n:'AI & Machine Learning',s:'AI',c:'#2ea043',q:180,p:34,p2:3,p3:7,days:3,
+   prereq:'Search algorithms, Probability basics',mhr:1.8,mhrTier:'B',
+   topics:[
+    {n:'Search & Heuristics',q:55,heat:76,diff:'Medium',min:1.5,trend:'+3%',mhr:1.9,
+     pre:['Graph traversal (BFS/DFS)','Heuristic concept'],
+     sub:['A*: optimal iff h NEVER OVERESTIMATES h* (admissible)','If h=0: uniform cost search; If h=h*: perfect (no wasted expansion)','BFS: complete+optimal for uniform cost; O(b^d) memory','DFS: not complete (infinite branches), not optimal','Minimax: exhaustive (2^d), Alpha-beta prunes to ~2^(d/2)'],
+     tip:'A* admissible means h(n) ≤ h*(n). NEVER OVERESTIMATES (not underestimates) — exam trap!',
+     cf:'A* vs Greedy Best-first: A*=f(n)=g(n)+h(n) optimal; Greedy=f(n)=h(n) only, not optimal'},
+    {n:'ML & Neural Networks',q:45,heat:78,diff:'Easy',min:1,trend:'+8%',mhr:2.0,
+     pre:['Linear algebra basics','Probability'],
+     sub:['Supervised: labeled data, explicit teacher','Unsupervised: no labels, discover patterns (clustering)','Reinforcement: reward/penalty for actions in environment','XOR: not linearly separable → needs hidden layer (multilayer)','Perceptron: solves OR but NOT XOR (single layer limitation)','Backpropagation: computes error gradients backward through network'],
+     tip:'XOR not linearly separable is THE classic ML question. Trending +8% in NTA. Easy marks.',
+     cf:'Supervised vs Unsupervised: Supervised has labeled training data; Unsupervised discovers structure'},
+    {n:'Knowledge & Fuzzy',q:50,heat:70,diff:'Easy',min:1,trend:'+2%',mhr:1.8,
+     pre:['Logic and propositional calculus'],
+     sub:['Semantic networks: directed labeled graph (nodes=concepts, edges=relations)','Frames: slot-value structures (general knowledge representation)','Scripts: stereotypical event sequences (actors,roles,props,scenes)','Fuzzy crossover point: μA(x)=0.5 exactly','α-cut: {x : μA(x) ≥ α} — the set of elements with membership ≥ α'],
+     tip:'Frame vs Script: Frame=general; Script=stereotypical events (restaurant, buying). Easy 2 marks.',
+     cf:'Frame vs Script: Frames are general knowledge structures; Scripts are for specific event sequences'},
+   ]},
+  {id:'cd',n:'Compiler Design',s:'CD',c:'#c084fc',q:120,p:30,p2:2,p3:4,days:3,
+   prereq:'CFG and formal languages (TOC)',mhr:1.4,mhrTier:'C',
+   topics:[
+    {n:'Parsing (LL/LR)',q:55,heat:75,diff:'Hard',min:2.5,trend:'+1%',mhr:1.1,
+     pre:['CFGs (from TOC)','Derivation trees'],
+     sub:['LL(1): top-down, left scan, leftmost derivation','LR power: LR(0) ⊂ SLR(1) ⊂ LALR(1) ⊂ CLR(1)','LALR(1) = most practical (yacc/bison uses it)','CLR(1) = most powerful but largest parse tables','Ambiguous grammar → NO LL or LR grammar exists','LL(1) needs both left-recursion removal AND left-factoring'],
+     tip:'LALR=practical, CLR=most powerful. Ambiguous grammar cannot be LL or LR. These appear every paper.',
+     cf:'LALR vs CLR: Both bottom-up LR; CLR has more states; LALR merges states (may lose some precision)'},
+    {n:'Lexical & Code Optimization',q:35,heat:65,diff:'Medium',min:1.5,trend:'+2%',mhr:1.0,
+     pre:['Regular expressions','Basic assembly concepts'],
+     sub:['Scanner: char stream → token stream with lexemes','Token count: each identifier,operator,literal,semicolon = 1 token','Loop unrolling: AVOIDS loop test at each iteration (not fewer instructions!)','Strength reduction: costly op → cheaper (×32 → <<5)','Dead code elimination: unreachable code (after unconditional branch)'],
+     tip:'Loop unrolling purpose: avoids loop TESTS (not fewer total instructions). Classic trap!',
+     cf:'Loop unrolling vs Loop fusion: Unrolling=expand iterations; Fusion=combine adjacent loops'},
+   ]},
+  {id:'cg',n:'Computer Graphics & Image Processing',s:'CG/IP',c:'#e06b1a',q:110,p:28,p2:1,p3:4,days:2,
+   prereq:'2D/3D geometry, Matrix operations',mhr:0.9,mhrTier:'C',
+   topics:[
+    {n:'Transformations & Algorithms',q:45,heat:72,diff:'Hard',min:3,trend:'0%',mhr:0.9,
+     pre:['Matrix multiplication','Trigonometry'],
+     sub:['Rotation about arbitrary point P: T(P)×R(θ)×T(-P) = 3 transforms!','Cyrus-Beck: t = (fi-P1)·n / (P2-P1)·n','Bresenham: integer arithmetic only, no floating point','Wavelet transform: multi-resolution property (unique!)','Laplacian mask: sum of all elements = 0','Butterworth LP: H=1/(1+[D/D0]^2n)'],
+     tip:'Rotation about arbitrary point needs T·R·T⁻¹. Wavelet = multi-resolution property is classic.',
+     cf:'Bresenham vs DDA: Bresenham=integer only (faster); DDA=floating point'},
+   ]},
+];
+
+const TOTAL_Q=SUBS.reduce((s,b)=>s+b.q,0);
+
+// Marks/Hour efficiency data (S > A > B > C)
+const EFF=[
+  {n:'Number Systems (hex/oct/bin)',mhr:5.5,tier:'S',hrs:1.0,exp_m:5,why:'< 1 min per Q. Quick conversion = instant marks'},
+  {n:'Cache EAT Formula',mhr:4.0,tier:'S',hrs:1.5,exp_m:6,why:'Formula memorized once, applied perfectly'},
+  {n:'OSI/TCP-IP Layer Matching',mhr:3.5,tier:'S',hrs:1.0,exp_m:4,why:'Match the following = 1 min'},
+  {n:'CPU Scheduling Calculation',mhr:2.8,tier:'A',hrs:3,exp_m:8,why:'Avg wait = Avg TAT - burst. Quick formula'},
+  {n:'K-map Boolean',mhr:2.7,tier:'A',hrs:3,exp_m:8,why:'K-map = visual pattern recognition'},
+  {n:'FD Closure & Candidate Key',mhr:2.7,tier:'A',hrs:6,exp_m:16,why:'Appears every paper, formula-driven'},
+  {n:'Graph Algorithms (Dijkstra/Kruskal)',mhr:2.7,tier:'A',hrs:6,exp_m:16,why:'10+ marks per paper when mastered'},
+  {n:"Banker's Algorithm",mhr:2.6,tier:'A',hrs:5,exp_m:12,why:'Matrix operations, once understood always correct'},
+  {n:'RSA Calculation',mhr:2.4,tier:'A',hrs:2,exp_m:5,why:'Formula-driven, verify e×d mod φ(n)=1 first'},
+  {n:'SQL JOINs & Aggregate',mhr:2.2,tier:'A',hrs:4,exp_m:9,why:'Application-based, test with examples'},
+  {n:'NFA→DFA Conversion',mhr:2.2,tier:'A',hrs:5,exp_m:11,why:'Subset construction: systematic process'},
+  {n:'Sorting Complexity',mhr:2.0,tier:'A',hrs:3,exp_m:6,why:'Memorize table once: sorts × cases'},
+  {n:'Master Theorem',mhr:2.0,tier:'A',hrs:3,exp_m:6,why:'3 cases: once memorized, instant answer'},
+  {n:'Pumping Lemma (CFL)',mhr:2.0,tier:'A',hrs:4,exp_m:8,why:'Standard proof structure'},
+  {n:'OOP Concepts (virtual/static)',mhr:2.1,tier:'A',hrs:3,exp_m:6,why:'Easy once you know the traps'},
+  {n:'Testing Order & Regression',mhr:2.5,tier:'A',hrs:2,exp_m:5,why:'Pure memorization = guaranteed marks'},
+  {n:'ML Basics (Supervised/XOR)',mhr:2.0,tier:'A',hrs:2,exp_m:4,why:'Vocabulary-level, easy NTA marks'},
+  {n:'LL/LR Parsing',mhr:1.1,tier:'C',hrs:7,exp_m:8,why:'Complex theory, low ROI'},
+  {n:'CG Transformations',mhr:0.9,tier:'C',hrs:7,exp_m:6,why:'Difficult math, skip for 7-day plan'},
+];
+
+const PREDS=[
+  {r:1,n:"Banker's Algorithm (Deadlock Avoidance)",conf:97,tag:'SURE',c:'#2ea043',note:'38/50 papers',key:'Need≤Available → find safe sequence'},
+  {r:2,n:'Graph: Dijkstra / Kruskal / Floyd-Warshall',conf:95,c:'#2ea043',tag:'SURE',note:'36/50 papers',key:'Time complexity + trace execution',tr:true},
+  {r:3,n:'SQL: JOINs + Aggregate + Subqueries',conf:94,c:'#2ea043',tag:'SURE',note:'35/50 papers',key:'Full join > inner join tuple count',tr:false},
+  {r:4,n:'Normalization: 3NF/BCNF + FD Closure',conf:93,c:'#2ea043',tag:'SURE',note:'34/50 papers',key:'Attribute closure A+ algorithm',tr:false},
+  {r:5,n:'NFA→DFA + Pumping Lemma for CFL',conf:92,c:'#2ea043',tag:'SURE',note:'34/50 papers',key:'|vxy|≤m AND |vy|≥1',tr:false},
+  {r:6,n:'CPU Scheduling (SJF/FCFS/RR)',conf:91,c:'#2ea043',tag:'SURE',note:'33/50 papers',key:'Avg wait = Avg TAT - Avg burst time',tr:false},
+  {r:7,n:'Cache EAT Formula (write-through)',conf:90,c:'#2ea043',tag:'SURE',note:'32/50 papers',key:'h×Tc + (1-h)×(Tc+Tm)',tr:false},
+  {r:8,n:'Pumping Lemma Regular Language',conf:88,c:'#e06b1a',tag:'HIGH',note:'31/50 papers',key:'Contradiction using a^p b^p',tr:false},
+  {r:9,n:'RSA Encryption Calculation',conf:87,c:'#e06b1a',tag:'HIGH',note:'30/50 papers',key:'C=M^e mod n; φ(n)=(p-1)(q-1)',tr:false},
+  {r:10,n:'Page Replacement (LRU/FIFO/OPT)',conf:85,c:'#e06b1a',tag:'HIGH',note:'29/50 papers',key:"Belady's anomaly = FIFO only!",tr:false},
+  {r:11,n:'Master Theorem (3 Cases)',conf:84,c:'#e06b1a',tag:'HIGH',note:'28/50 papers',key:'Compare f(n) with n^(log_b a)',tr:true},
+  {r:12,n:'Neural Networks + XOR Problem',conf:81,c:'#e06b1a',tag:'HIGH',note:'26/50 papers',key:'XOR not linearly separable',tr:true},
+  {r:13,n:'LL/LR Parsing Theory',conf:78,c:'#e06b1a',tag:'HIGH',note:'24/50 papers',key:'LALR=practical; CLR=most powerful',tr:false},
+  {r:14,n:'K-map Boolean Simplification',conf:77,c:'#4f9eff',tag:'MED',note:'23/50 papers',key:'4×4 K-map SOP simplification',tr:false},
+  {r:15,n:'IoT/Cloud/ML Basics (NTA trend)',conf:76,c:'#4f9eff',tag:'MED',note:'18/50 NTA papers',key:'Zigbee=lowest power; Amdahl=1/f',tr:true},
+];
+
+const FCARDS=[
+  {cat:'Formula',q:'EAT formula: cache read with write-through scheme?',a:'EAT = h×Tc + (1-h)×(Tc+Tm)\n\nh = cache hit ratio\nTc = cache access time\nTm = main memory time\n\nMiss path: access cache THEN main memory',hint:'For write-through: writes always go to main memory'},
+  {cat:'Formula',q:'RSA: p=3, q=11, e=3. Find cipher C for M=5.',a:'n = 3×11 = 33\nφ(n) = (3-1)(11-1) = 20\nVerify: 3×7=21≡1 (mod 20) ✓ → d=7\nC = 5³ mod 33 = 125 mod 33 = 26',hint:'Always verify e×d mod φ(n)=1 before encrypting!'},
+  {cat:'Formula',q:'Stars & bars: x+y+z=11, x≥1, y≥2, z≥3?',a:'Substitute:\ny₁=x-1, y₂=y-2, y₃=z-3 (all ≥0)\ny₁+y₂+y₃ = 11-6 = 5\nC(5+3-1, 3-1) = C(7,2) = 21',hint:'C(n+k-1, k-1) formula. n=remaining sum, k=number of variables'},
+  {cat:'Formula',q:'Amdahl: 5% sequential, rest parallelizable. Max speedup?',a:'S = 1/(f + (1-f)/P)\nAs P→∞: S_max = 1/f = 1/0.05 = 20×\n\nIf 20% sequential: max = 1/0.20 = 5×\nThe sequential fraction LIMITS everything!',hint:'s = sequential fraction. Max speedup = 1/s regardless of processors'},
+  {cat:'Formula',q:"Banker's: when can process Pi run? After finish?",a:'Pi runs if: Need_i ≤ Available\n(check ALL resources: Need[j]≤Avail[j])\n\nAfter Pi finishes:\nAvailable_new = Available + Alloc_i\n\nThen check next process with new Available',hint:'Release ALL allocated resources when process finishes'},
+  {cat:'Formula',q:'Master Theorem for T(n)=2T(n/2)+n?',a:'a=2, b=2, f(n)=n¹\nn^(log₂2) = n¹ = n (same as f(n))\nCase 2: f(n)=Θ(n^log_b a)\n→ T(n) = Θ(n log n)',hint:'Case 2 hits when f(n) equals the critical function → multiply by log n'},
+  {cat:'Formula',q:'Unix inode: 10 direct, 1 single, 1 double, 1 triple, 1KB blocks, 4B addr. Max file?',a:'Pointers per block = 1024/4 = 256\n• Direct: 10 KB\n• Single: 256 KB\n• Double: 256² KB = 64 MB\n• Triple: 256³ KB ≈ 16 GB\nTotal ≈ 16 GB',hint:'Triple indirect dominates. 256³ = ~16 million blocks'},
+  {cat:'Formula',q:'TDM: 4 channels, 100 bytes/sec each, 1 byte slots. Link bit rate?',a:'Total = 4 × 100 = 400 bytes/sec\nBit rate = 400 × 8 = 3200 bps',hint:'Always: channels × rate × 8 bits/byte'},
+  {cat:'Concept',q:'2PL vs Timestamp-based concurrency: key difference?',a:'2PL = PESSIMISTIC\n• Locks before accessing\n• Blocks other transactions\n• Two phases: growing + shrinking\n\nTimestamp = OPTIMISTIC\n• No locks\n• Timestamps order transactions\n• May abort & restart',hint:'Pessimistic assumes conflicts will happen; Optimistic assumes they won\'t'},
+  {cat:'Concept',q:'Which page replacement algorithms suffer from Belady\'s Anomaly?',a:'ONLY FIFO suffers from Belady\'s Anomaly\n(more frames → MORE page faults!)\n\nLRU and Optimal are "stack algorithms":\n• S(m) ⊆ S(m+1) for all m\n• More frames = same or fewer faults\n• NEVER suffer Belady\'s anomaly',hint:'Stack property: pages with more frames is a superset of fewer frames'},
+  {cat:'Concept',q:'Which language classes are closed under complement?',a:'Regular: ✓ CLOSED\nCFL: ✗ NOT CLOSED\nCSL (Context-sensitive): ✓ CLOSED\nRecursive: ✓ CLOSED\nRE: ✗ NOT CLOSED\n\nRE and CFL are the only two NOT closed\nunder complement',hint:'RE: if TM accepts L, there\'s no guarantee TM can decide complement of L'},
+  {cat:'Concept',q:'For A* to find the optimal path, what must be true?',a:'Heuristic h must be ADMISSIBLE:\nh(n) ≤ h*(n) for ALL nodes n\n\nAdmissible = never OVERESTIMATES true cost\n\nIf h=0: uniform cost (always admissible)\nIf h=h*: perfect (expands minimum nodes)\nConsistent → admissible (stronger)',hint:'ADMISSIBLE = never over-estimate. The word OVER is crucial (not under)'},
+  {cat:'Concept',q:'Fragment offset: in which protocol header?',a:'Fragment offset is in the IP header\n(Network layer, Layer 3)\nNOT in TCP header!\n\nTCP header: Seq#, Ack#, Window, Checksum\nIP header: TTL, Protocol, ID, Flags,\nFragment offset, Source IP, Dest IP',hint:'Fragmentation is IP/Network layer concern. TCP is transport (end-to-end)'},
+  {cat:'Concept',q:'First applet method called? Complete lifecycle?',a:'LIFECYCLE ORDER:\n1. init() ← FIRST (one-time initialization)\n2. start() (called on each page visit)\n3. stop() (called when page is left)\n4. destroy() (browser closes)\n\nMnemonic: "I Start Stopping Dying"',hint:'init() is called ONCE at creation. start()/stop() can be called multiple times'},
+  {cat:'Concept',q:'What is temporal cohesion in software engineering?',a:'Temporal cohesion = functions grouped\nbecause they execute at the SAME TIME\n(e.g., initialization module, cleanup module)\nNOT because they are functionally related\n\nCohesion scale (worst to best):\nCoincidental < Logical < Temporal <\nProcedural < Communicational <\nSequential < FUNCTIONAL (best)',hint:'Temporal = grouped by time. Functional cohesion = doing ONE well-defined thing (best)'},
+  {cat:'Trap',q:'TRAP: "Virtual functions can be static" — TRUE or FALSE?',a:'FALSE!\nVirtual = per-object, runtime binding\nStatic = per-class, compile-time binding\nThese are MUTUALLY EXCLUSIVE!\n\nStatic has no "this" pointer →\nnothing to dispatch dynamically\nAnswer: NO, virtual CANNOT be static',hint:'Most common OOP exam trap. If you see this in an exam, the answer is FALSE'},
+  {cat:'Trap',q:"TRAP: \"Belady's anomaly affects LRU\" — TRUE or FALSE?",a:"FALSE!\nBelady's anomaly (more frames → more faults)\naffects ONLY FIFO page replacement\n\nLRU and Optimal are 'stack algorithms':\nmore frames = same or fewer faults\n(monotone property)\n\nRemember: FIFO is the culprit, not LRU",hint:'Stack algorithms: S(m+1) ⊇ S(m) always holds for LRU. Not for FIFO.'},
+  {cat:'Trap',q:'TRAP: "Fragment offset is in TCP header" — TRUE or FALSE?',a:'FALSE!\nFragment offset is in IP header (Layer 3)\n\nTCP header fields:\nSequence#, Acknowledgment#,\nWindow size, Checksum, Urgent pointer\n\nIP header fields:\nTTL, Protocol, ID, Flags,\nFRAGMENT OFFSET, Source/Dest IP',hint:'Fragmentation = IP responsibility. TCP doesn\'t fragment, it uses MSS.'},
+  {cat:'Trap',q:'TRAP: "2PL is an optimistic concurrency protocol" — TRUE or FALSE?',a:'FALSE!\n2PL = PESSIMISTIC concurrency control\n(uses locks, blocks other transactions)\n\nOptimistic protocols:\n• Timestamp-based ordering\n• Multiversion CC (MVCC)\n\nPessimistic = assume conflicts happen\nOptimistic = assume they don\'t',hint:'2PL uses locks = pessimistic. No locks = optimistic. Simple rule.'},
+  {cat:'Trap',q:'TRAP: "A* optimal if h never underestimates h*" — TRUE or FALSE?',a:'FALSE! The wording is REVERSED!\n\nA* is optimal if h never OVERESTIMATES h*\nThis is called ADMISSIBILITY\nh(n) ≤ h*(n) for all n\n\n"Never underestimates" means h≥h*\nwhich would make h INADMISSIBLE!\n\nRemember: admissible = ≤ h*',hint:'The word OVER is critical. Under = too low = OK. Over = too high = not admissible.'},
+  {cat:'Mnemonic',q:'OSI layers bottom to top: memory trick?',a:'"Please Do Not Touch Steve\'s Pet Alligator"\n\n1. Physical (bits, cables)\n2. Data Link (frames, MAC)\n3. Network (packets, IP, BGP)\n4. Transport (TCP/UDP — END-TO-END)\n5. Session\n6. Presentation\n7. Application (HTTP, SMTP, FTP)',hint:'Transport = end-to-end. BGP despite using TCP is layer 3 (routing purpose)'},
+  {cat:'Mnemonic',q:'CMM Maturity Levels 1-5: memory trick?',a:'"Initially Robots Define Machines Optimally"\n\n1. INITIAL — chaos, ad hoc\n2. REPEATABLE — basic PM\n3. DEFINED — standardized\n4. MANAGED — quantitative\n5. OPTIMIZING — continuous improvement\n\nSoftware orgs start at 1 or 2.',hint:'Each level adds ONE type of discipline: tracking→standard→measure→improve'},
+  {cat:'Mnemonic',q:'4 Coffman Deadlock Conditions: memory trick?',a:'"MHCN" = Must Have Circular Needs\n\nMutual Exclusion\nHold and Wait\nCircular Wait\nNo Preemption\n\nALL 4 must be SIMULTANEOUSLY present\nfor deadlock. Prevent ANY ONE → no deadlock\n\nBanker\'s = AVOIDANCE (not prevention)',hint:'Prevention=deny a condition; Avoidance=Banker\'s algorithm; Detection=check cycles'},
+  {cat:'Mnemonic',q:'Normalization 1NF through BCNF: memory trick?',a:'"Every Good Student Can Be Better"\n\n1NF: Every atom (atomic values)\n2NF: Good (no partial dependency)\n3NF: Student (no transitive dependency)\nBCNF: Can Be (every determinant=superkey)\n\nBCNF is STRICTER than 3NF!\nBCNF ⊂ 3NF (every BCNF is 3NF)',hint:'BCNF: if A→B, then A must be a superkey. No exceptions allowed'},
+  {cat:'Mnemonic',q:'Closure properties of language classes (key points)',a:'REGULAR: closed under EVERYTHING\n✓ Union,Intersect,Complement,Concat,Star\n✓ Homomorphism,Reverse,Difference\n\nCFL: closed under SOME\n✓ Union,Concat,Star,Homomorphism\n✗ Intersection, Complement, Difference\n\nRecursive: closed under EVERYTHING\nRE: ✗ NOT closed under complement',hint:'CFL NOT closed under intersection & complement — these 2 are the exam questions'},
+
+  // ══ FORMULAS — extra ══
+  {cat:'Formula',q:'LCS recurrence relation and time complexity?',a:'LCS(i,j) = LCS(i-1,j-1)+1 if X[i]=Y[j]\n       = max(LCS(i-1,j), LCS(i,j-1)) otherwise\n\nTime: O(mn) Space: O(mn) for full table\nSpace-optimized: O(min(m,n)) using 2 rows\n\nTrace table from bottom-right to find the actual LCS.',hint:'Classic DP: fill table row by row. Backtrack for the actual sequence.'},
+  {cat:'Formula',q:'0/1 Knapsack recurrence relation?',a:'K(i,w) = K(i-1,w)                if w[i] > w\n       = max(K(i-1,w),              if w[i] ≤ w\n             v[i]+K(i-1,w-w[i]))\n\ni = item index, w = current capacity\nTime: O(nW) — pseudo-polynomial\nNot polynomial because W can be exponential in input size',hint:'Two cases: dont take item i (K(i-1,w)) or take it (v[i]+K(i-1,w-w[i]))'},
+  {cat:'Formula',q:'Prim\'s MST: time complexity for dense vs sparse graphs?',a:'Prim\'s MST time complexity:\n• With adjacency matrix: O(V²)\n• With binary heap: O(ElogV)\n• With Fibonacci heap: O(E+VlogV)\n\nFor dense graph (E≈V²): O(V²) better\nFor sparse graph (E≈V): O(ElogV) better\n\nSame as Dijkstra structure (greedy vertex-based)',hint:'Prim = Dijkstra analogy: both are greedy and vertex-based. Key difference: Prim builds MST, Dijkstra finds shortest paths.'},
+  {cat:'Formula',q:'AVL tree height vs number of nodes relationship?',a:'Height h AVL tree has:\n• Minimum nodes: N(h) = N(h-1)+N(h-2)+1\n  (Fibonacci-like growth)\n  N(0)=1, N(1)=2, N(2)=4...\n\n• For n nodes: height ≤ 1.44×log₂(n+2)\n\n• Height is O(log n) guaranteed\n• Compare: BST worst case = O(n) for sorted input',hint:'AVL guarantees O(log n) height by maintaining |height(left)-height(right)| ≤ 1'},
+  {cat:'Formula',q:'Shannon\'s channel capacity formula?',a:'C = B × log₂(1 + S/N)\n\nC = channel capacity (bits/sec)\nB = bandwidth (Hz)\nS/N = signal-to-noise ratio\n\nExample: B=3100Hz, S/N=1023\nC = 3100 × log₂(1024) = 3100 × 10 = 31,000 bps\n\nNyquist (noiseless): C = 2B×log₂(M) where M=signal levels',hint:'Shannon = maximum theoretical capacity. Nyquist = maximum for noiseless channel with M signal levels.'},
+  {cat:'Formula',q:'Huffman coding: time complexity and code length property?',a:'Huffman coding time: O(n log n)\n• Build min-heap: O(n)\n• Extract 2 min + insert once: O(log n)\n• Repeat n-1 times: O(n log n)\n\nOptimality: Huffman produces optimal prefix-free code\n• More frequent symbol → shorter code\n• Less frequent → longer code\n• Average code length = H(source entropy)',hint:'Huffman is a greedy algorithm for SOURCE CODING (lossless compression). Unlike LZW which is dictionary-based.'},
+  {cat:'Formula',q:'DFS timestamps: discovery d[v] and finish f[v]. What do they tell us?',a:'DFS timestamps in directed graph:\n• Tree edge: d[u] < d[v] < f[v] < f[u]\n• Back edge: d[v] < d[u] < f[u] < f[v]\n  (indicates CYCLE in directed graph)\n• Forward edge: d[u] < d[v] < f[v] < f[u]\n• Cross edge: d[v] < f[v] < d[u] < f[u]\n\nTopological sort: sort by DECREASING finish time',hint:'Back edge in directed graph = cycle. Topological sort uses DFS finish times (descending order).'},
+  {cat:'Formula',q:'B+ tree vs B tree: key structural differences?',a:'B TREE:\n• Data in ALL nodes (internal + leaf)\n• Searching stops at internal node\n\nB+ TREE:\n• Data ONLY in leaf nodes\n• Internal nodes = index only\n• Leaves linked as a LIST (sequential access)\n• Better for range queries!\n\nFor n records, B+ tree leaf nodes: ⌈n/order⌉\nFan-out of internal node ≈ block_size/key_size',hint:'B+ tree is used in most real databases (MySQL InnoDB). Sequential scan = follow the leaf linked list.'},
+  {cat:'Formula',q:'Pipeline speedup formula. When does it break down?',a:'Pipeline speedup = n / (k + n - 1)\nWhere n = number of tasks, k = stages\n\nFor large n (n >> k):\nSpeedup ≈ k (number of stages)\n\nBreaks down due to:\n• Structural hazards (resource conflict)\n• Data hazards (RAW, WAR, WAW dependencies)\n• Control hazards (branches)\n\nSolution: stalls, forwarding, branch prediction',hint:'Perfect pipeline speedup = number of stages. Real speedup always less due to hazards.'},
+  {cat:'Formula',q:'Number of comparisons in sorting algorithms (worst case)?',a:'Algorithm     | Worst Case Comparisons\nBubble Sort   | n(n-1)/2 ≈ n²/2\nInsertion Sort| n(n-1)/2 ≈ n²/2  \nSelection Sort| n(n-1)/2 ≈ n²/2\nMerge Sort    | n⌊log₂n⌋ ≈ n log n\nQuick Sort    | n(n-1)/2 ≈ n²/2 (sorted input!)\nHeap Sort     | 2n log n approximately\n\nLower bound: Ω(n log n) for comparison-based',hint:'Quick sort worst case = already sorted or reverse sorted input (bad pivot choice)'},
+  // ══ CONCEPTS — extra ══
+  {cat:'Concept',q:'What is thrashing in operating systems? How to prevent it?',a:'Thrashing = process spends more time page faulting than executing\n• Cause: too many processes competing for limited frames\n• Each process has insufficient frames\n• Page fault rate explodes\n\nDetection: CPU utilization drops despite high paging activity\n\nPrevention:\n• Working set model (allocate frames per working set)\n• PFF (Page Fault Frequency) algorithm\n• Reduce degree of multiprogramming',hint:'Classic trade-off: more processes = higher CPU utilization (until thrashing point, then crashes)'},
+  {cat:'Concept',q:'Internal fragmentation vs External fragmentation: difference?',a:'INTERNAL FRAGMENTATION:\n• Wasted space INSIDE allocated block\n• Occurs in FIXED partitions\n• Example: 50KB process in 64KB partition\n  → 14KB wasted inside\n\nEXTERNAL FRAGMENTATION:\n• Wasted space OUTSIDE allocated blocks\n• Occurs in DYNAMIC partitions\n• Total free space exists but not contiguous\n• Solution: compaction or non-contiguous allocation',hint:'Internal = waste inside allocated block (fixed size). External = waste between blocks (variable size, fragmented free space)'},
+  {cat:'Concept',q:'Deadlock vs Starvation: what is the key difference?',a:'DEADLOCK:\n• Set of processes PERMANENTLY blocked\n• None can proceed (circular wait)\n• Cannot be resolved without intervention\n• Example: P1 holds R1, waits for R2;\n           P2 holds R2, waits for R1\n\nSTARVATION:\n• Process waits INDEFINITELY but not blocked by cycle\n• Other processes keep getting resources first\n• CAN be resolved: use aging (increase priority over time)\n• Example: low-priority process never gets CPU',hint:'Deadlock = no one can proceed. Starvation = one is indefinitely delayed. Starvation has a solution (aging).'},
+  {cat:'Concept',q:'Dirty read, Non-repeatable read, Phantom read: explain each?',a:'DIRTY READ: Read UNCOMMITTED data\n• T1 writes X=5, T2 reads X=5, T1 rolls back\n• T2 read a value that never committed\n• Prevented by: READ COMMITTED isolation\n\nNON-REPEATABLE READ: Same query gives different results\n• T2 reads X=5, T1 updates X=10, T2 reads X=10 again\n• Prevented by: REPEATABLE READ isolation\n\nPHANTOM READ: New rows appear in re-query\n• T2 counts rows, T1 INSERTS new row, T2 counts again\n• Prevented by: SERIALIZABLE isolation',hint:'Isolation levels from weakest: READ UNCOMMITTED → COMMITTED → REPEATABLE READ → SERIALIZABLE'},
+  {cat:'Concept',q:'Dynamic scoping vs Static (lexical) scoping: when does the difference show?',a:'STATIC (LEXICAL) SCOPING:\n• Variable resolved at COMPILE time\n• Uses the DECLARING environment\n• Most languages: C, Java, Python, Go\n\nDYNAMIC SCOPING:\n• Variable resolved at RUNTIME\n• Uses the CALLING environment\n• Example: Lisp (original), Bash, Perl\n\nClassic example:\nint x=10; // global\nvoid g() { print(x); } // what does this print?\nvoid f() { int x=20; g(); } // f calls g\n• Static: prints 10 (g sees global x)\n• Dynamic: prints 20 (g sees f\'s x)',hint:'Most exams show a code example. Static=where function DEFINED; Dynamic=where function CALLED'},
+  {cat:'Concept',q:'RISC vs CISC: what are the key architectural differences?',a:'RISC (Reduced Instruction Set):\n• Simple instructions, fixed length\n• Load/Store architecture (only L/S access memory)\n• More registers (reduces memory access)\n• Single clock cycle (mostly)\n• Hardware-based, pipeline-friendly\n• Examples: ARM, MIPS, RISC-V\n\nCISC (Complex Instruction Set):\n• Complex instructions, variable length\n• Instructions can access memory directly\n• Fewer registers\n• Multiple clock cycles per instruction\n• Microcode-based\n• Examples: x86, x86-64 (Intel/AMD)',hint:'Modern CPUs (Intel) translate CISC instructions to RISC micro-ops internally. Best of both worlds.'},
+  {cat:'Concept',q:'Linker vs Loader: what does each do in the compilation process?',a:'COMPILER: Source code → Object code (.obj/.o)\nASSEMBLER: Assembly → Object code\n\nLINKER: Combines object files + libraries\n• Resolves external references (function calls)\n• Produces executable (or loadable module)\n• Static linking: copies library code into exe\n• Dynamic linking: references shared library at runtime\n\nLOADER: Loads executable into memory\n• Allocates memory space\n• Relocates addresses (if position-dependent)\n• Begins execution\n\nOrder: Source → Compile → Assemble → LINK → LOAD → Run',hint:'Classic exam: "transfers executable from disk to memory" = LOADER (not compiler, not linker!)'},
+  {cat:'Concept',q:'DMA (Direct Memory Access): what is it and when is it used?',a:'DMA = peripheral device transfers data to/from memory WITHOUT CPU intervention\n\nWithout DMA:\n• CPU polls or handles interrupts for EVERY byte\n• CPU time wasted on simple data movement\n\nWith DMA:\n1. CPU programs DMA controller (address, count)\n2. DMA performs the transfer\n3. DMA interrupts CPU when done\n4. CPU resumes\n\nUsed for: disk I/O, network cards, graphics\nDMA steals CPU cycles: "cycle stealing"',hint:'DMA frees CPU during bulk data transfers. CPU is interrupted ONCE at end, not for every byte.'},
+  {cat:'Concept',q:'Pipeline hazards: structural, data, and control — explain each?',a:'STRUCTURAL HAZARD:\n• Two instructions need same hardware resource\n• Example: single memory port for fetch + load\n• Solution: separate instruction/data cache, stall\n\nDATA HAZARD (RAW is most common):\n• Instruction needs result of previous\n• Read After Write (RAW): true dependency\n• WAR and WAW: false dependencies\n• Solution: forwarding/bypassing, stalls (NOP)\n\nCONTROL HAZARD:\n• Branch outcome unknown until executed\n• Next instruction already fetched may be wrong\n• Solution: branch prediction, delayed branching, speculative execution',hint:'RAW = most common and unavoidable. Control hazards = most expensive. Modern CPUs use prediction for both.'},
+  {cat:'Concept',q:'Cohesion vs Coupling in software design: what is good?',a:'COHESION (HIGHER is BETTER):\n• How well elements within a module belong together\n• Best to worst:\n  Functional > Sequential > Communicational >\n  Procedural > Temporal > Logical > Coincidental\n\nCOUPLING (LOWER is BETTER):\n• How much modules depend on each other\n• Best to worst:\n  Data < Stamp < Control < External < Common < Content\n\nGoal: HIGH COHESION + LOW COUPLING\n= Easy to maintain, test, and reuse',hint:'Cohesion = within module (high=good). Coupling = between modules (low=good). Easy to remember: "high low"'},
+  {cat:'Concept',q:'Abstract class vs Interface in object-oriented programming?',a:'ABSTRACT CLASS:\n• Can have concrete methods (with implementation)\n• Can have instance variables\n• Single inheritance only (in Java/C#)\n• Use when: sharing code among related classes\n• Example: Shape with draw() abstract, getColor() concrete\n\nINTERFACE (pre-Java 8):\n• Only method signatures, no implementation\n• No instance variables (only constants)\n• Multiple implementation allowed\n• Use when: defining a contract (capability)\n• Example: Serializable, Comparable\n\nJava 8+: Interfaces can have default methods',hint:'Abstract class = partial implementation. Interface = pure contract. A class can implement MANY interfaces but extend only ONE abstract class.'},
+  {cat:'Concept',q:'Synchronous vs Asynchronous serial transmission?',a:'SYNCHRONOUS:\n• Data sent as continuous stream\n• Synchronized by shared clock\n• NO start/stop bits needed\n• More efficient for bulk data\n• Example: SPI, I²C, Ethernet (synchronous link)\n\nASYNCHRONOUS:\n• Data sent character by character\n• Each character has START bit and STOP bit(s)\n• No shared clock needed\n• Overhead: 2-3 bits per character\n• Example: UART, RS-232, old modems\n• Formula: bits/char = data + parity + 1 start + 1 stop',hint:'Async exam formula: 7+1+1+1=10 bits/char over 3200bps = 320 chars/sec. The start/stop bits are overhead.'},
+  {cat:'Concept',q:'Circuit switching vs Packet switching: key differences?',a:'CIRCUIT SWITCHING:\n• Dedicated path established before data\n• Resources reserved for entire call\n• Guaranteed bandwidth, fixed delay\n• Wasteful if bursty traffic\n• Example: traditional telephone network (PSTN)\n\nPACKET SWITCHING:\n• Data split into packets, routed independently\n• Resources shared (statistical multiplexing)\n• Variable delay, better utilization\n• Can handle bursty traffic efficiently\n• Example: Internet (TCP/IP)\n\nMessage switching: store-and-forward for whole message',hint:'Internet uses packet switching. Phone calls used circuit switching. Packet switching won because of efficiency.'},
+  {cat:'Concept',q:'Stack memory vs Heap memory: what goes where?',a:'STACK:\n• Function call frames, local variables\n• Automatic allocation and deallocation\n• LIFO order\n• Fixed size (stack overflow if exceeded)\n• Fast access (sequential memory)\n• Thread-specific (each thread has own stack)\n\nHEAP:\n• Dynamically allocated memory (malloc/new)\n• Programmer manages allocation/deallocation\n• Can fragment over time\n• Larger but slower than stack\n• Shared by all threads in process\n\nMemory leak: allocate heap but never free',hint:'Stack = automatic, fast, limited. Heap = manual, flexible, can leak. Buffer overflow usually attacks stack.'},
+  {cat:'Concept',q:'What is a critical section? What are the requirements for a valid solution?',a:'CRITICAL SECTION: Code segment accessing shared resource\nthat must not be executed by >1 process simultaneously\n\n3 requirements for valid CS solution:\n1. MUTUAL EXCLUSION: Only one process in CS at a time\n2. PROGRESS: If no process in CS, waiting processes\n   can eventually enter (no deadlock among candidates)\n3. BOUNDED WAITING: Process waiting to enter CS\n   must enter within finite time (no starvation)\n\nPeterson\'s algorithm satisfies all 3 for 2 processes\nSemaphores and monitors satisfy all 3',hint:'These 3 requirements appear as a "which is NOT a requirement" question. All 3 must be satisfied.'},
+  {cat:'Concept',q:'What are the phases of a compiler in order?',a:'1. LEXICAL ANALYSIS (Scanner)\n   Source → Token stream\n   Uses: DFA for pattern matching\n\n2. SYNTAX ANALYSIS (Parser)\n   Tokens → Parse tree (CST)\n   Uses: CFG, LL/LR grammars\n\n3. SEMANTIC ANALYSIS\n   Type checking, symbol table lookup\n   Verifies meaning is consistent\n\n4. INTERMEDIATE CODE GENERATION\n   Parse tree → 3-address code or IR\n\n5. CODE OPTIMIZATION\n   IR → Optimized IR (optional)\n\n6. CODE GENERATION\n   IR → Target machine code',hint:'Lexical→Syntax→Semantic→IR→Optimize→Generate. The scanner is the first phase, code generator is last.'},
+  {cat:'Concept',q:'What is a semaphore? What are its types and operations?',a:'Semaphore = non-negative integer with 2 atomic operations:\n\nWAIT (P / down / decrement):\n  while(S ≤ 0) busy-wait;\n  S--;\n\nSIGNAL (V / up / increment):\n  S++;\n\nTypes:\n• BINARY semaphore (mutex): 0 or 1\n  Used for mutual exclusion\n• COUNTING semaphore: 0 to N\n  Used for resource counting\n\nNote: Monitor is HIGHER LEVEL than semaphore\nNote: wait and signal are the ONLY two operations',hint:'P=proberen (test) in Dutch, V=verhogen (increment). wait decrements, signal increments. ATOMIC!'},
+  {cat:'Concept',q:'What is subnetting? How do you find the number of usable hosts?',a:'Subnetting: dividing a network into smaller networks\n\nSubnet mask: contiguous 1s followed by 0s\n  /24 = 255.255.255.0 = 24 ones\n\nFor /n subnet mask (n = network bits):\n• Number of subnets = 2^(subnet_bits)\n• Hosts per subnet = 2^(host_bits) - 2\n  (subtract 2: network address + broadcast)\n\nExample: 192.168.1.0/26\n• 26 network bits, 6 host bits\n• Hosts per subnet = 2^6 - 2 = 62\n• Subnets in /24 → 2^(26-24) = 4 subnets',hint:'Always subtract 2 from host count: network address (all 0s) and broadcast (all 1s) are not usable.'},
+  {cat:'Concept',q:'What is view serializability vs conflict serializability?',a:'CONFLICT SERIALIZABILITY:\n• Based on conflicting operations (RW, WR, WW pairs)\n• Check: build precedence graph, no cycle = conflict serializable\n• Subset of view serializable\n• Easier to check (polynomial time)\n\nVIEW SERIALIZABILITY:\n• Based on reading the same values\n• More permissive (superset of conflict serializable)\n• NP-hard to check in general\n\nRelationship:\nConflict Serializable ⊂ View Serializable ⊂ All Schedules\n\nMost DBMSs use 2PL which ensures conflict serializability',hint:'Conflict implies View (every conflict serial schedule is also view serial). Not the other way.'},
+  // ══ TRAPS — extra ══
+  {cat:'Trap',q:'TRAP: "SRTF and SJF are the same algorithm" — TRUE or FALSE?',a:'FALSE! They are related but different:\n\nSJF (Shortest Job First):\n• NON-PREEMPTIVE\n• Once a job starts, it runs to completion\n• Optimal for minimizing average wait time (non-preemptive case)\n\nSRTF (Shortest Remaining Time First):\n• PREEMPTIVE version of SJF\n• New arrival can preempt current process\n  if it has shorter remaining time\n• Optimal for minimizing average wait time overall\n\nSRTF = preemptive SJF. Different in behavior!',hint:'SJF=non-preemptive (run to completion). SRTF=preemptive SJF (can be interrupted). Classic OS exam trap.'},
+  {cat:'Trap',q:'TRAP: "Floyd-Warshall fails with negative edge weights" — TRUE or FALSE?',a:'FALSE! Floyd-Warshall HANDLES negative weights!\n\nFloyd-Warshall:\n✓ Works with negative EDGES\n✗ Fails with negative CYCLES\n  (the shortest path becomes -∞)\n\nComparison:\nDijkstra: fails with any negative weights\nBellman-Ford: handles negative weights, detects negative cycles\nFloyd-Warshall: handles negative weights, fails with negative CYCLES\n\nDetecting negative cycle in Floyd-Warshall:\n  if d[i][i] < 0 for any i → negative cycle exists',hint:'The key distinction: negative EDGES vs negative CYCLES. Floyd-Warshall handles the former.'},
+  {cat:'Trap',q:'TRAP: "BFS always finds the shortest path" — TRUE or FALSE?',a:'CONDITIONAL — only for UNWEIGHTED graphs!\n\nBFS shortest path guarantee:\n✓ Unweighted graphs: BFS finds shortest path in # of EDGES\n✗ Weighted graphs: BFS does NOT find shortest path\n   (must use Dijkstra or Bellman-Ford)\n\nExample: graph A-B (weight 10), A-C (weight 1), C-B (weight 1)\nBFS finds A-B (1 hop) = 10\nDijkstra finds A-C-B (2 hops) = 2 (correct!)\n\nFor unweighted = BFS gives optimal. For weighted = Dijkstra.',hint:'BFS = shortest by number of hops. Dijkstra = shortest by total weight. Classic exam distinction.'},
+  {cat:'Trap',q:'TRAP: "Compilation produces machine code that can be directly executed" — TRUE or FALSE?',a:'FALSE! Compilation produces OBJECT CODE, not directly executable!\n\nCompilation pipeline:\n1. Compiler: source → object code (.o/.obj)\n   (contains machine instructions but unlinked references)\n2. Linker: object code + libraries → executable\n   (resolves function calls, produces .exe/.out)\n3. Loader: executable → load into memory and run\n\nObject code ≠ executable\nObject code has unresolved external references\nExecutable = fully linked, ready to run\n\nInterpreter directly executes source (no object code)',hint:'Compilation = object code. Linking = executable. Loading = running. Three separate steps.'},
+  {cat:'Trap',q:'TRAP: "Monitor is lower level than semaphore" — TRUE or FALSE?',a:'FALSE! Monitor is HIGHER LEVEL than semaphore!\n\nAbstraction hierarchy (lowest to highest):\n1. Hardware instructions (test-and-set, compare-and-swap)\n2. Semaphores (P/V operations)\n3. Monitors (high-level language construct)\n\nMonitor features:\n• Encapsulates shared data with procedures\n• Mutual exclusion is implicit (automatic)\n• Uses condition variables (wait/signal)\n• Easier to use correctly than semaphores\n\nSemaphores require manual V() after every CS exit\nMonitor does it automatically',hint:'Monitor = high level because it handles mutual exclusion automatically. Semaphore = more error-prone manual management.'},
+  {cat:'Trap',q:'TRAP: "IPv6 addresses are 32 bits long" — TRUE or FALSE?',a:'FALSE! IPv6 addresses are 128 bits!\n\nIPv4: 32 bits → ~4.3 billion addresses\n  Format: dotted decimal 192.168.1.1\n  Running out! (NAT is workaround)\n\nIPv6: 128 bits → ~3.4×10³⁸ addresses\n  Format: colon-hex 2001:db8::1\n  :: means consecutive blocks of zeros\n\nOther IPv6 facts:\n• No fragmentation by intermediate routers\n• No broadcast (uses multicast instead)\n• IPSec built-in (optional in IPv4)',hint:'IPv4=32bits=4 bytes. IPv6=128bits=16 bytes. 4× more bits = astronomically more addresses.'},
+  {cat:'Trap',q:'TRAP: "UDP is connection-oriented like TCP" — TRUE or FALSE?',a:'FALSE! UDP is CONNECTIONLESS!\n\nTCP:\n• Connection-oriented (3-way handshake)\n• Reliable (acknowledgments, retransmit)\n• Ordered (sequence numbers)\n• Flow control + congestion control\n• Higher overhead\n• Use: web, email, file transfer\n\nUDP:\n• Connectionless (send and forget)\n• Unreliable (no ACKs, may be lost)\n• No ordering guarantee\n• No flow/congestion control\n• Lower overhead, faster\n• Use: DNS, video streaming, gaming, VoIP',hint:'TCP = telephone call (connection first). UDP = postcard (just send, no guarantee). Classic comparison.'},
+  {cat:'Trap',q:'TRAP: "SQL WHERE clause can filter results of GROUP BY" — TRUE or FALSE?',a:'FALSE! Use HAVING to filter GROUP BY results!\n\nWHERE: filters rows BEFORE grouping\n  SELECT dept, COUNT(*) FROM emp\n  WHERE salary > 50000  ← filters rows first\n  GROUP BY dept;\n\nHAVING: filters groups AFTER grouping\n  SELECT dept, COUNT(*) FROM emp\n  GROUP BY dept\n  HAVING COUNT(*) > 5;  ← filters groups after\n\nExecution order:\nFROM → WHERE → GROUP BY → HAVING → SELECT → ORDER BY',hint:'WHERE=row filter (before GROUP BY). HAVING=group filter (after GROUP BY). Cannot swap them.'},
+  {cat:'Trap',q:'TRAP: "INTR has the highest priority interrupt in 8085" — TRUE or FALSE?',a:'FALSE! TRAP has the HIGHEST priority!\n\n8085 Interrupt Priority (highest to lowest):\n1. TRAP — non-maskable, HIGHEST\n   (cannot be disabled, edge+level triggered)\n2. RST 7.5 — maskable, edge triggered\n3. RST 6.5 — maskable, level triggered\n4. RST 5.5 — maskable, level triggered\n5. INTR — maskable, LOWEST priority\n   (most flexible, uses INTA cycle)\n\nMnemonic: "TRAP 7.5 6.5 5.5 INTR"\nTRAP is special: always responds even when INTE=0',hint:'TRAP = highest because it cannot be masked. INTR = lowest because it is fully maskable and controlled.'},
+  {cat:'Trap',q:'TRAP: "Abstract class cannot be instantiated even if all methods are implemented" — TRUE or FALSE?',a:'TRUE (this IS correct — it\'s a double trap!)\n\nAn abstract class CANNOT be instantiated\neven if ALL methods are concretely implemented.\n\nAbstract class with all concrete methods:\n✓ Can serve as base class\n✓ Can be subclassed\n✗ CANNOT be directly instantiated\n  (abstract keyword prevents it)\n\nTo use: must extend and create subclass object\n\nComparison:\n• Abstract class = can have state + partial implementation\n• Interface = contract only (pre-Java 8)\n• Concrete class = can be instantiated directly',hint:'Abstract keyword alone prevents instantiation, regardless of method implementations. This is the whole point.'},
+  {cat:'Trap',q:'TRAP: "Cache write-back is slower than write-through" — TRUE or FALSE?',a:'FALSE! Write-back is generally FASTER!\n\nWRITE-THROUGH:\n• Write to cache AND main memory simultaneously\n• Every write hits slow main memory\n• Memory always consistent with cache\n• Simpler but slower writes\n\nWRITE-BACK:\n• Write to cache ONLY\n• Write to memory only when block evicted (dirty bit)\n• Faster writes (memory speed not on critical path)\n• More complex (dirty bit management)\n\nWrite-back is preferred in most modern CPUs\nbecause writes are fast (cache speed)',hint:'Write-back = cache-only write (fast). Write-through = cache+memory write (slow). Modern CPUs use write-back.'},
+  {cat:'Trap',q:'TRAP: "NFA always has fewer states than equivalent DFA" — TRUE or FALSE?',a:'FALSE! NFA can have SAME number of states.\nAnd DFA can have EXPONENTIALLY more states.\n\nNFA to DFA conversion (subset construction):\n• Worst case: DFA has 2^n states for n-state NFA\n• Best case: DFA has same n states\n• Average: depends on the language\n\nWhy: each DFA state = set of NFA states\n  (called "subset construction" or "powerset construction")\n\nExample: NFA accepting strings ending in "01"\n  3 states NFA → 4 states DFA (simple case)\n  But language like (a+b)*b can be more complex',hint:'DFA states can be EXPONENTIALLY more than NFA states. 2^n worst case. NFA is more succinct.'},
+  {cat:'Trap',q:'TRAP: "Every binary relation (2 attributes) is always in BCNF" — TRUE or FALSE?',a:'TRUE! (This is a real fact — not a trap in the false sense)\n\nEvery binary relation R(A,B) is always in BCNF!\n\nProof:\nOnly possible non-trivial FDs:\n• A→B: A is superkey (BCNF satisfied)\n• B→A: B is superkey (BCNF satisfied)\n• A→B AND B→A: both are superkeys\n• Neither A→B nor B→A: no FD violation\n\nSo for 2-attribute relations:\nBCNF is ALWAYS satisfied!\n\nThis means: normalization is only needed for 3+ attributes',hint:'For binary relations: any FD makes the LHS a superkey (there are only 2 attributes!). Hence always BCNF.'},
+  {cat:'Trap',q:'TRAP: "Quicksort is always O(n log n)" — TRUE or FALSE?',a:'FALSE! Quicksort worst case is O(n²)!\n\nQuicksort time complexity:\n• Best case: O(n log n) — pivot splits evenly\n• Average case: O(n log n) — random pivot\n• WORST CASE: O(n²) — sorted input, bad pivot!\n  (always pick first/last element as pivot)\n\nWorst case scenarios:\n• Already sorted array + first element pivot\n• Reverse sorted array + first element pivot\n• All elements equal\n\nSolution: randomized pivot, median-of-3\nMerge Sort: always O(n log n) (but not in-place)',hint:'Quicksort = fast in practice but O(n²) worst case. Merge Sort = guaranteed O(n log n) but uses extra space.'},
+  {cat:'Trap',q:'TRAP: "CFL is closed under intersection with regular languages" — TRUE or FALSE?',a:'TRUE! (And this is frequently tested!)\n\nCFL intersection properties:\n✗ CFL ∩ CFL is NOT necessarily CFL\n  (e.g., {a^n b^n c^n} = {a^n b^n} ∩ {b^n c^n} is CSL)\n\n✓ CFL ∩ REGULAR = CFL (always!)\n  PDA can simulate DFA on the side\n\nSo:\n• CFL NOT closed under CFL-intersection\n• CFL IS closed under intersection with REGULAR\n\nThis distinction appears in almost every TOC exam!',hint:'CFL ∩ Regular = CFL (closed). CFL ∩ CFL = not necessarily CFL (not closed). Very important distinction!'},
+  // ══ MNEMONICS — extra ══
+  {cat:'Mnemonic',q:'ACID properties for database transactions: memory trick?',a:'"Accountants Carefully Isolate Data"\n\nA — ATOMICITY: All or nothing\n    (transaction commits fully or rolls back fully)\nC — CONSISTENCY: DB moves from one valid state to another\n    (all constraints satisfied before and after)\nI — ISOLATION: Transactions don\'t interfere with each other\n    (concurrent = same as serial execution)\nD — DURABILITY: Committed data persists\n    (survives crashes, written to disk)\n\nAtomic = indivisible. Durable = permanent.',hint:'All 4 properties are always tested together. Isolation is enforced by concurrency control (2PL, Timestamps).'},
+  {cat:'Mnemonic',q:'SQL command categories: DDL, DML, DCL, TCL — what belongs where?',a:'"Data Definitely Makes Copies"\n\nDDL (Data Definition Language):\n  CREATE, ALTER, DROP, TRUNCATE\n  (defines schema structure)\n\nDML (Data Manipulation Language):\n  SELECT, INSERT, UPDATE, DELETE\n  (manipulates data)\n\nDCL (Data Control Language):\n  GRANT, REVOKE\n  (access control)\n\nTCL (Transaction Control Language):\n  COMMIT, ROLLBACK, SAVEPOINT\n  (transaction management)',hint:'CREATE TABLE = DDL. SELECT = DML. GRANT = DCL. COMMIT = TCL. Know which category each belongs to!'},
+  {cat:'Mnemonic',q:'OSI Layer protocols + devices: what goes at each layer?',a:'Layer  Device/Protocol\n7 App:  HTTP, SMTP, FTP, DNS, DHCP\n6 Pres: SSL/TLS, JPEG, GIF, MPEG\n5 Ses:  NetBIOS, RPC, SQL sessions\n4 Trans:TCP, UDP — GATEWAY\n3 Net:  IP, OSPF, BGP — ROUTER\n2 DLink:Ethernet, HDLC — SWITCH/BRIDGE\n1 Phys: Coax, Fiber, Hub — REPEATER/HUB\n\nHub=Layer 1 (repeats signal)\nSwitch=Layer 2 (MAC address table)\nRouter=Layer 3 (IP routing)\nGateway=Layer 4-7 (protocol conversion)',hint:'Hub→Switch→Router = Layer 1→2→3. Switch uses MAC address table. Router uses routing table.'},
+  {cat:'Mnemonic',q:'Algorithm paradigm classification: Greedy vs DP vs Divide-and-Conquer?',a:'GREEDY (local optimal = global optimal):\n  Dijkstra, Prim, Kruskal, Huffman\n  Fractional Knapsack, Activity Selection\n\nDYNAMIC PROGRAMMING (overlapping subproblems):\n  Floyd-Warshall, Bellman-Ford\n  LCS, MCM, 0/1 Knapsack\n  Fibonacci (memoized)\n\nDIVIDE & CONQUER (independent subproblems):\n  Merge Sort, Quick Sort\n  Binary Search, Strassen Matrix Multiply\n\nMnemonic: "Greedy Doesn\'t Do Divide"\nGreedy=local; DP=remember+reuse; D&C=split+combine',hint:'DP vs D&C: DP has overlapping subproblems (solved once, stored). D&C subproblems are independent (no overlap).'},
+  {cat:'Mnemonic',q:'Compiler phases and the tools/theory used at each?',a:'"Lexical Syntax Semantic Intermediate Code Optimal Generate"\n\nLEXICAL: DFA + Regular Expressions (lex/flex)\nSYNTAX: CFG + LL/LR Parsers (yacc/bison)\nSEMANTIC: Symbol table + Type checking\nINTERMEDIATE: 3-address code / AST\nOPTIMIZATION: Loop unrolling, dead code, strength reduction\nCODE GENERATION: Register allocation, instruction selection\n\nScanner: RE → DFA (Kleene\'s theorem)\nParser: CFG → LL(1) or LALR(1)',hint:'Exam: "which phase uses CFG?" = Syntax/Parser. "which phase uses DFA?" = Lexical/Scanner.'},
+  // ══ COMPARISON — new category ══
+  {cat:'Comparison',q:'BFS vs DFS: compare on completeness, optimality, memory, and use cases?',a:'Property    | BFS          | DFS\n------------|--------------|----------------\nCompleteness| ✓ Yes        | ✗ No (infinite)\nOptimality  | ✓ Unweighted | ✗ No\nTime        | O(b^d)       | O(b^m)\nMemory      | O(b^d) HIGH  | O(bm) LOW\nStrategy    | Level-order  | Backtracking\n\nBFS uses: shortest path (unweighted),\n  level-order traversal, web crawlers\nDFS uses: topological sort, cycle detection,\n  backtracking problems, maze solving\n\nb=branching, d=solution depth, m=max depth',hint:'BFS = complete and optimal for unweighted but uses MORE memory. DFS = less memory but not complete.'},
+  {cat:'Comparison',q:'TCP vs UDP: complete comparison table?',a:'Feature      | TCP         | UDP\n-------------|-------------|----------\nConnection   | Yes (3-way) | No\nReliable     | Yes         | No\nOrdered      | Yes         | No\nFlow control | Yes         | No\nCongestion   | Yes         | No\nHeader size  | 20 bytes    | 8 bytes\nSpeed        | Slower      | Faster\nUse          | Web,Email   | DNS,VoIP\n             | File transfer| Gaming\n\nTCP header: Seq#, Ack#, Window, Checksum,\n  Source port, Dest port, Flags (SYN,ACK,FIN)',hint:'TCP = telephone call. UDP = postcard. For exam: fragment offset is in IP header, NOT TCP or UDP.'},
+  {cat:'Comparison',q:'SCAN vs C-SCAN vs LOOK disk scheduling: how do they differ?',a:'SCAN (Elevator algorithm):\n• Head moves in one direction, serves all requests\n• Then REVERSES and serves other direction\n• Starvation possible at extremes (just missed)\n\nC-SCAN (Circular SCAN):\n• Head moves in one direction only\n• Returns to START without serving on return trip\n• More uniform wait time (no discrimination)\n\nLOOK:\n• Like SCAN but only goes as far as last request\n• Doesn\'t travel to end of disk\n• More efficient than SCAN\n\nC-LOOK:\n• Like C-SCAN but only to last request each direction',hint:'SCAN vs C-SCAN: SCAN reverses, C-SCAN returns to start (circular). LOOK = SCAN stopping at last request.'},
+  {cat:'Comparison',q:'Stack vs Queue: operations, LIFO vs FIFO, implementation?',a:'STACK (LIFO - Last In First Out):\n• Push (insert at top), Pop (remove from top)\n• Peek/Top (view without removing)\n• Applications: function calls, undo/redo,\n  expression evaluation, DFS\n• Array or linked list (insert/delete at SAME end)\n\nQUEUE (FIFO - First In First Out):\n• Enqueue (insert at rear), Dequeue (remove from front)\n• Applications: BFS, CPU scheduling,\n  print spooling, process queue\n• Array or linked list (insert at rear, delete at front)\n\nDeque: Double-ended queue (both ends)',hint:'Stack=LIFO (plates). Queue=FIFO (line). Both can be implemented with arrays or linked lists.'},
+  {cat:'Comparison',q:'Primary Key vs Foreign Key vs Candidate Key vs Superkey?',a:'SUPERKEY: Any set of attributes that uniquely identifies a tuple\n  Example: {SSN}, {SSN, Name}, {SSN, Age, Name}\n  (May have extra attributes)\n\nCANDIDATE KEY: Minimal superkey (no subset is a superkey)\n  Example: {SSN}, {Email}\n  (Cannot remove any attribute)\n\nPRIMARY KEY: One chosen candidate key (designated)\n  Marked with PK. Used for referencing.\n\nFOREIGN KEY: Attribute(s) in one table that REFERENCE\n  the primary key of another table\n  Enforces REFERENTIAL INTEGRITY',hint:'Superkey ⊃ Candidate key. Primary key is chosen from candidate keys. Foreign key references primary key.'},
+  // ══ QUICK FACTS — new category ══
+  {cat:'Quick Facts',q:'What are the standard TCP/IP port numbers for common services?',a:'Well-known ports (0-1023):\n• HTTP: 80\n• HTTPS: 443\n• FTP: 21 (control), 20 (data)\n• SSH: 22\n• Telnet: 23\n• SMTP: 25 (send email)\n• DNS: 53\n• DHCP: 67 (server), 68 (client)\n• POP3: 110\n• IMAP: 143\n• BGP: 179 (uses TCP)\n• HTTP/3 (QUIC): 443/UDP',hint:'80=HTTP, 443=HTTPS, 22=SSH, 25=SMTP, 53=DNS. These appear as 1-mark questions in CN section.'},
+  {cat:'Quick Facts',q:'Character encoding: how many characters in ASCII, Extended ASCII, Unicode?',a:'ASCII (7-bit):\n• 128 characters (2^7)\n• Covers English alphabet + digits + symbols\n• Range: 0 to 127\n\nExtended ASCII (8-bit):\n• 256 characters (2^8)\n• Covers European characters\n• Range: 0 to 255\n\nUnicode (UTF-16):\n• 65,536 characters in Basic Multilingual Plane\n• Full Unicode: 1,114,112 code points\n• Windows uses 16-bit Unicode internally\n\nUTF-8: Variable width, ASCII-compatible',hint:'7-bit ASCII = 128 chars. 16-bit Unicode = 65536 chars. Windows 2000 = 16-bit Unicode (exam fact!)'},
+  {cat:'Quick Facts',q:'What is the full form of common networking acronyms: BGP, OSPF, HDLC, CSMA?',a:'BGP: Border Gateway Protocol\n  (inter-AS routing, uses TCP port 179)\nOSPF: Open Shortest Path First\n  (intra-AS, link-state, uses Dijkstra)\nHDLC: High-Level Data Link Control\n  (bit-oriented protocol, Layer 2)\nCSMA/CD: Carrier Sense Multiple Access\n  / Collision Detection (Ethernet)\nCSMA/CA: Collision Avoidance (Wi-Fi)\nFDMA: Frequency Division Multiple Access\nTDMA: Time Division Multiple Access\nCDMA: Code Division Multiple Access',hint:'BGP=border between ISPs. OSPF=within one network. HDLC=bit-oriented (not character-oriented) = Layer 2 protocol.'},
+  {cat:'Quick Facts',q:'Properties of perfect binary tree, complete binary tree, and full binary tree?',a:'PERFECT binary tree (all leaves same level):\n• Height h → exactly 2^(h+1)-1 nodes\n• Height h → 2^h leaf nodes\n• All internal nodes have exactly 2 children\n\nCOMPLETE binary tree (filled level-by-level):\n• All levels full except possibly last\n• Last level filled LEFT to RIGHT\n• Used in HEAPS\n\nFULL binary tree (every node has 0 or 2 children):\n• No node has exactly 1 child\n• If n internal nodes → n+1 leaves\n\nHeap uses COMPLETE binary tree structure',hint:'Perfect=all leaves same level. Complete=heap structure. Full=0 or 2 children only.'},
+  {cat:'Quick Facts',q:'What are the properties of a complete graph Kn?',a:'Complete graph Kn properties:\n• n vertices, each connected to ALL others\n• Number of edges: n(n-1)/2\n• Each vertex degree: n-1\n• Regular graph: all degrees equal\n• Hamilton circuit: exists for n ≥ 3 (trivially!)\n• Euler circuit: exists when n-1 is even\n  (all vertices have same degree = n-1)\n  So K4 (n-1=3=odd): no Euler circuit\n  K5 (n-1=4=even): has Euler circuit\n• K4 IS planar; K5 is NOT planar',hint:'K4: 4 vertices, 6 edges, degree 3 each. K5: 5 vertices, 10 edges, degree 4 each. K5 is non-planar.'},
+  {cat:'Quick Facts',q:'What are the access times of different memory hierarchy levels (approximate)?',a:'Memory hierarchy (fastest to slowest):\n\nRegisters: < 1 ns (in CPU)\nL1 Cache: 1-5 ns\nL2 Cache: 5-15 ns\nL3 Cache: 15-50 ns\nRAM (Main Memory): 50-200 ns\nSSD (NVMe): 50-200 μs\nHDD (Magnetic): 5-20 ms\nOptical Disk: 100-200 ms\nMagnetic Tape: seconds to minutes\n\nRule: each level ~10× slower than previous',hint:'For EAT problems: Tc≈50ns, Tm≈300ns is typical in exam questions. Cache=ns, Disk=ms, Tape=seconds.'},
+  {cat:'Quick Facts',q:'What is the significance of Θ, O, and Ω notation?',a:'BIG-O O(f(n)): UPPER bound\n  "grows no faster than f(n)"\n  T(n) = O(f(n)) means T(n) ≤ c×f(n) for large n\n\nBIG-OMEGA Ω(f(n)): LOWER bound\n  "grows no slower than f(n)"\n  T(n) = Ω(f(n)) means T(n) ≥ c×f(n) for large n\n\nBIG-THETA Θ(f(n)): TIGHT bound\n  "grows exactly like f(n)"\n  T(n) = Θ(f(n)) means both O and Ω\n  = sandwiched between c1×f(n) and c2×f(n)\n\nLower bound on SORTING: Ω(n log n)\nMerge Sort: Θ(n log n) [tight!]',hint:'O=worst case upper bound. Ω=best case lower bound. Θ=exact (both O and Ω). Sorting lower bound = Ω(n log n).'},
+];
+
+const FMLS=[
+  {f:'EAT = h×Tc + (1-h)×(Tc+Tm)',t:'CO'},{f:'RSA: C=Mᵉ mod n; n=pq; φ(n)=(p-1)(q-1)',t:'CN'},
+  {f:'Dijkstra: O(ElogV) min-heap',t:'DSA'},{f:'Floyd-Warshall: O(V³) DP',t:'DSA'},
+  {f:'Merge Sort: 2T(n/2)+n → Θ(n log n)',t:'DSA'},{f:'Radix Sort: O(d(n+k))',t:'DSA'},
+  {f:'Build Heap: O(n) trick',t:'DSA'},{f:'Mesh: n(n-1)/2 duplex links',t:'CN'},
+  {f:'TDM bps = channels×bytes/s×8',t:'CN'},{f:'Propagation = distance / speed',t:'CN'},
+  {f:"Banker's: Need=Max-Alloc",t:'OS'},{f:'Avg wait = Avg TAT - Avg burst',t:'OS'},
+  {f:'Unix max file ≈ 10+256+256²+256³ KB',t:'OS'},{f:'Stars & bars: C(n+k-1,k-1)',t:'DM'},
+  {f:'Amdahl: S_max = 1/(1-f)',t:'CO'},{f:'FP: n=14 value adjustment factors',t:'SE'},
+  {f:'Master Theorem: 3 cases (see flash)',t:'DSA'},{f:'Pumping CFL: |vxy|≤m AND |vy|≥1',t:'TOC'},
+  {f:'Double hashing: (h1+i×h2) mod m',t:'DSA'},{f:'LCS: O(mn) DP',t:'DSA'},
+];
+
+const PLANS={
+  7:[
+    {day:'Day 1–2',topic:'Graph Algorithms + Trees',items:['Dijkstra trace','Kruskal sort+union','Floyd-Warshall table','BST/AVL rotations','B-Tree degree'],q:'30/day',time:'6hrs',c:'#4f9eff'},
+    {day:'Day 3',topic:"OS: Banker's + Scheduling + EAT",items:["Banker's 3 practice","SJF/FCFS/RR avg wait","LRU/FIFO page faults","EAT write-through formula"],q:'25',time:'6hrs',c:'#2ea043'},
+    {day:'Day 4',topic:'DBMS: Normalization + SQL',items:['FD closure A+','3NF/BCNF identification','SQL JOINS tuple count','Candidate key finding'],q:'25',time:'5hrs',c:'#e06b1a'},
+    {day:'Day 5',topic:'Theory of Computation',items:['NFA→DFA 3 practice','Pumping lemma CFL','Chomsky hierarchy','CFG ambiguity'],q:'25',time:'5hrs',c:'#a371f7'},
+    {day:'Day 6',topic:'Networks + CO + SE',items:['RSA calculation','K-map SOP','Master Theorem','Testing order+Agile'],q:'20',time:'4hrs',c:'#1abc9c'},
+    {day:'Day 7',topic:'Full Mock + Weak Areas',items:['100Q mock (120 min)','ALL wrong answers review','Flash cards: Traps only','Last-hour formula sheet'],q:'100 (mock)',time:'7hrs',c:'#d1a022'},
+  ],
+  15:[
+    {day:'Days 1–3',topic:'DSA Complete',items:['All graph algorithms','Tree+rotations','All sorting proofs','DP: LCS+MCM+Knapsack','Hashing techniques'],q:'25/day',time:'5hrs',c:'#4f9eff'},
+    {day:'Days 4–5',topic:'Theory of Computation',items:['DFA/NFA/Regex','CFL/PDA/CNF','TM and decidability','P vs NP','All closure properties'],q:'25/day',time:'5hrs',c:'#a371f7'},
+    {day:'Days 6–7',topic:'Operating Systems',items:["Banker's + all scheduling","Paging+segmentation","Synchronization primitives","File systems inode","Disk scheduling"],q:'20/day',time:'5hrs',c:'#2ea043'},
+    {day:'Days 8–9',topic:'Database Systems',items:['All normal forms','SQL advanced','Transaction + 2PL','ER to Relational'],q:'20/day',time:'4hrs',c:'#e06b1a'},
+    {day:'Days 10–11',topic:'Networks + CO',items:['TCP/IP+OSI+Routing','RSA+Subnetting','Boolean+K-map','Cache+EAT formula'],q:'20/day',time:'4hrs',c:'#1abc9c'},
+    {day:'Days 12–13',topic:'Programming + SE + AI',items:['C++ OOP+Templates','Compiler LL/LR','Software testing types','A* + ML basics'],q:'15/day',time:'3hrs',c:'#ff6b8a'},
+    {day:'Days 14–15',topic:'JRF Sprint + Paper I',items:['3 full mock exams','Analyze every wrong answer','Hard topics drill','Paper I: 4 hrs intensive prep'],q:'100×3',time:'7hrs',c:'#d1a022'},
+  ],
+};
+
+
+// ════════ RENDER HELPERS ════════
+function bar(items){
+  const max=Math.max(...items.map(i=>i.v));
+  return `<div class="bwrap">${items.map(it=>`<div class="brow">
+    <div class="blbl" title="${it.n}">${it.n}</div>
+    <div class="btrack"><div class="bfill" style="width:${Math.round((it.v/max)*100)}%;background:${it.c||'#4f9eff'}"><span class="bnum">${it.v}</span></div></div>
+  </div>`).join('')}</div>`;
+}
+function hcell(s){
+  const pct=Math.round(s.q/TOTAL_Q*100);
+  const alpha=Math.round((0.1+0.5*(s.q/380))*255).toString(16).padStart(2,'0');
+  return `<div class="hcell" style="background:${s.c}${alpha};border:1px solid ${s.c}33"><div class="hcn" style="color:${s.c}">${s.s}</div><div class="hcq">${s.q}</div><div class="hcp">${pct}% · ${s.p}/50</div></div>`;
+}
+function accItem(t,color){
+  const dc={Easy:'deasy',Medium:'dmed',Hard:'dhard'}[t.diff]||'dmed';
+  const tc=t.trend.startsWith('+')?'tup':t.trend.startsWith('-')?'tdn':'tst';
+  const tierCol={S:'var(--gold)',A:'var(--green)',B:'var(--accent)',C:'var(--muted)'}[t.mhr>=3.5?'S':t.mhr>=2.0?'A':t.mhr>=1.5?'B':'C'];
+  const tierLbl=t.mhr>=3.5?'★★★★★':t.mhr>=2.0?'★★★★':t.mhr>=1.5?'★★★':'★★';
+  return `<div class="acc"><div class="acc-top">
+    <span class="acc-name">${t.n}</span>
+    <span class="dtag ${dc}">${t.diff}</span>
+    <span style="font-size:.65rem;color:var(--muted);margin-left:4px">${t.min}min/Q</span>
+    <span class="acc-mhr" style="color:${tierCol};border-color:${tierCol}30;font-size:.63rem">${tierLbl} ${t.mhr}M/h</span>
+    <div class="acc-heat"><div class="acc-hf" style="width:${t.heat}%;background:${color}"></div></div>
+    <span class="acc-pct" style="color:${color}">${t.heat}%</span>
+    <span class="acc-trend ${tc}">${t.trend}</span>
+  </div>
+  <div class="acc-body">
+    ${t.pre?`<div class="prereq-box">📚 Prerequisites: ${t.pre.join(' → ')}</div>`:''}
+    <div class="subtags" style="margin-top:7px">${t.sub.map(s=>`<span class="stag">${s}</span>`).join('')}</div>
+    <div class="tip-box mt8">💡 ${t.tip}</div>
+    ${t.cf?`<div style="font-size:.7rem;color:var(--muted);margin-top:6px;padding:5px 8px;background:rgba(255,255,255,.02);border-radius:4px;border-left:2px solid var(--dim)">⚡ Confusion pair: ${t.cf}</div>`:''}
+  </div></div>`;
+}
+function ins(cls,title,body){return `<div class="ins ${cls}"><div class="it">${title}</div><div class="ib">${body}</div></div>`;}
+function radarSVG(data){
+  const cx=130,cy=130,r=90,n=data.length;
+  const pts=data.map((d,i)=>{const a=(i/n)*2*Math.PI-Math.PI/2,rv=r*(d.v/100);return{x:cx+rv*Math.cos(a),y:cy+rv*Math.sin(a),lx:cx+108*Math.cos(a),ly:cy+108*Math.sin(a),name:d.n};});
+  const poly=pts.map(p=>`${p.x.toFixed(1)},${p.y.toFixed(1)}`).join(' ');
+  const grid=[25,50,75,100].map(g=>data.map((_,i)=>{const a=(i/n)*2*Math.PI-Math.PI/2;return `${(cx+r*(g/100)*Math.cos(a)).toFixed(1)},${(cy+r*(g/100)*Math.sin(a)).toFixed(1)}`;}).join(' '));
+  const lines=data.map((_,i)=>{const a=(i/n)*2*Math.PI-Math.PI/2;return `<line x1="${cx}" y1="${cy}" x2="${(cx+r*Math.cos(a)).toFixed(1)}" y2="${(cy+r*Math.sin(a)).toFixed(1)}" stroke="#1e2a3a" stroke-width="1"/>`;}).join('');
+  return `<svg width="260" height="260" viewBox="0 0 260 260">${grid.map(g=>`<polygon points="${g}" fill="none" stroke="#1e2a3a" stroke-width="1"/>`).join('')}${lines}<polygon points="${poly}" fill="rgba(79,158,255,.12)" stroke="#4f9eff" stroke-width="2"/>${pts.map(p=>`<circle cx="${p.x.toFixed(1)}" cy="${p.y.toFixed(1)}" r="3" fill="#4f9eff"/><text x="${p.lx.toFixed(1)}" y="${p.ly.toFixed(1)}" text-anchor="middle" dominant-baseline="middle" font-size="8" fill="#636e7b">${p.name}</text>`).join('')}</svg>`;
+}
+
+// ════════ PANELS ════════
+function renderDoctrine(){
+  return `
+  <div style="text-align:center;padding:16px 0 8px">
+    <div style="font-size:.7rem;font-weight:700;color:var(--accent);text-transform:uppercase;letter-spacing:2px;margin-bottom:8px">The Master Formula</div>
+    <div style="font-size:1rem;font-weight:800;color:var(--text);background:var(--card2);border:1px solid var(--border);border-radius:10px;padding:14px 20px;display:inline-block">
+      JRF = (7 Core Topics × 85% mastery) + (Paper I × 70%) + (Exam Tactics × Time Management)
+    </div>
+    <div style="font-size:.72rem;color:var(--muted);margin-top:8px">≈ 80 marks from Top 7 + 65 marks Paper I + 65 marks from remaining 93 questions = <span style="color:var(--gold);font-weight:700">210/300 ✓ JRF</span></div>
+  </div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-bottom:10px">
+  ${[
+    {v:'3,650+',l:'Questions analyzed',c:'var(--accent)'},
+    {v:'38/50',l:'Papers: Banker\'s appeared',c:'var(--green)'},
+    {v:'65%',l:'JRF target on Paper II',c:'var(--orange)'},
+    {v:'33%',l:'Paper I weight (often ignored)',c:'var(--red)'},
+    {v:'7',l:'Golden topics (65% of marks)',c:'var(--gold)'},
+    {v:'8× ROI',l:'Best topic: Number systems',c:'var(--cyan)'},
+  ].map(s=>`<div class="card" style="padding:11px 14px;text-align:center">
+    <div style="font-size:1.6rem;font-weight:900;color:${s.c}">${s.v}</div>
+    <div style="font-size:.64rem;color:var(--muted);text-transform:uppercase;letter-spacing:.4px;margin-top:2px">${s.l}</div>
+  </div>`).join('')}
+  </div>
+
+  <div style="margin-bottom:4px;font-size:.8rem;font-weight:800;color:var(--text);padding-left:2px">📜 The 7 Laws of UGC NET CS JRF</div>
+  ${[
+    {num:1,title:'The Concentration Law',body:'7 topics = 65% of marks every year without exception. These are: Graph Algorithms, Banker\'s, Normalization+FDs, NFA→DFA, CPU Scheduling, Cache EAT, RSA. Everything else is bonus.',impact:'ROI: Focus 60% of study time on these 7.'},
+    {num:2,title:'The Trap Law',body:'10% of questions are engineered traps for candidates who "mostly know" the topic. Virtual≠static, 2PL=pessimistic, Belady=FIFO only, A* admissible=never overestimates. These 10 traps cost JRF every year.',impact:'Impact: Knowing 10 traps = instant +10 marks on exam day.'},
+    {num:3,title:'The Paper I Law',body:'Paper I = 100 marks = 33% of total score. Every CS student\'s biggest mistake is ignoring it. With 6 hours of strategic prep, CS students can get 70+/100. Mathematical reasoning, data interpretation, ICT basics — all easy for CS background.',impact:'Math: 6 hrs prep × 1.5 extra marks/hr = +9 marks toward JRF threshold.'},
+    {num:4,title:'The Speed Law',body:'100 questions in 120 minutes = 1.2 min average. A candidate who knows 70% topics but manages time well OUTSCORES one who knows 90% but runs out of time. Strategy beats raw knowledge.',impact:'Rule: If cannot solve in 2.5 min → SKIP and return. Never leave blank (no negative marking).'},
+    {num:5,title:'The Recurrence Law',body:"Banker's Algorithm has appeared in 38 out of 50 papers analyzed (97%). RSA in 30 papers. CPU Scheduling in 33 papers. These are NOT optional — they are GUARANTEED marks every exam.",impact:'Insight: Mastering just Banker\'s and RSA = ~6 guaranteed correct answers.'},
+    {num:6,title:'The Prerequisite Law',body:'You cannot master Floyd-Warshall without understanding graph representation. Cannot do BCNF without FD closure. Cannot do NFA→DFA without understanding state construction. Prerequisites must be learned first.',impact:'Failure mode: Students memorize formulas without prerequisites → cannot apply under pressure.'},
+    {num:7,title:'The Trend Law',body:'Post-2018 NTA exams show +40% ML/IoT/Cloud frequency. These questions test only VOCABULARY: "Zigbee=lowest power", "supervised=labeled data", "XOR not linearly separable". 2 hours → 3-4 easy questions.',impact:'Bet: ML/IoT/Blockchain will continue increasing in 2025 NTA exams.'},
+  ].map(l=>`<div class="law" data-num="${l.num}">
+    <div style="display:flex;align-items:flex-start;gap:10px">
+      <div class="law-num">${l.num}</div>
+      <div style="flex:1">
+        <div class="law-title">${l.title}</div>
+        <div class="law-body">${l.body}</div>
+        <div class="law-impact">▸ ${l.impact}</div>
+      </div>
+    </div>
+  </div>`).join('')}
+
+  <div class="g2">
+    <div class="card"><div class="ct">Subject Radar</div><div style="display:flex;justify-content:center">${radarSVG(SUBS.slice(0,8).map(s=>({n:s.s,v:Math.min(99,Math.round(s.q/4))})))}</div></div>
+    <div class="card"><div class="ct">Subject Heatmap</div><div class="hmap">${SUBS.map(s=>hcell(s)).join('')}</div></div>
+  </div>
+  ${ins('tip','🔍 Meta-Pattern: The 2 Types of JRF Questions','<b>Type 1 — Exact Recall (40%):</b> You either know it or you don\'t. Banker\'s algorithm, RSA, EAT formula. Prep: memorize formulas + practice 10 examples each.<br><b>Type 2 — Trap Questions (10%):</b> Designed to trick "partial knowledge" candidates. Only those who know the EXACT condition get these. Prep: flash cards for all 10 traps.<br><b>Type 3 — Application (50%):</b> Requires applying concepts to new scenarios. The JRF differential. Prep: solve past papers under time pressure.')}
+  ${ins('gold','💎 The 20% Study Rule (Pareto Principle Applied)','If you have 40 total study hours before the exam:<br><b>Hours 1-8:</b> DSA (Graph+Trees) → ~16 expected marks<br><b>Hours 9-14:</b> OS (Banker\'s+Scheduling) → ~12 marks<br><b>Hours 15-20:</b> DBMS (Normalization+SQL) → ~12 marks<br><b>Hours 21-26:</b> TOC (DFA+CFL) → ~10 marks<br><b>Hours 27-30:</b> Paper I prep → ~8 bonus marks<br><b>Hours 31-40:</b> Networks+CO+Mock exams → remaining<br>These 40 hours = approximately <span style="color:var(--gold);font-weight:800">130/200 on Paper II + 65 on Paper I = 195/300</span>. Near JRF.')}
+  `;
+}
+
+function renderTaxonomy(){
+  let subFilter='all';
+  const html=`
+  <div class="chips" id="subChips">
+    <span class="chip on" data-filter="all">All Subjects</span>
+    ${SUBS.map(s=>`<span class="chip" data-filter="${s.id}" style="--sc:${s.c}">${s.s}</span>`).join('')}
+  </div>
+  <div class="card" id="taxBarChart"><div class="ct">Topic Heat Score (sorted by exam frequency)</div></div>
+  <div id="taxCards"></div>`;
+  return html;
+}
+
+function renderOracle(){
+  return `
+  ${ins('glow','🔬 Oracle Methodology','Heat = (appearances/50) × recency_weight × difficulty_bonus × 100<br>Recency: last 5 papers=1.5×; last 10=1.2×; older=1.0×. 📈 RISING = NTA exams show increased frequency since 2018.')}
+  <div class="card"><div class="ct">Top 15 Predictions — Confidence Score</div>
+  <div id="oracleBars">${PREDS.map(p=>`<div class="crow">
+    <div class="crank">#${p.r}</div>
+    <div style="flex:1">
+      <div style="display:flex;align-items:center;gap:7px;margin-bottom:2px">
+        <span class="cname">${p.n}</span>
+        ${p.tr?'<span style="font-size:.6rem;background:rgba(224,107,26,.15);color:var(--orange);border:1px solid rgba(224,107,26,.3);border-radius:3px;padding:1px 5px;font-weight:700">📈 RISING</span>':''}
+      </div>
+      <div style="font-size:.67rem;color:var(--muted)">${p.note} · <span style="color:#79c0ff">${p.key}</span></div>
+    </div>
+    <div style="display:flex;align-items:center;gap:7px">
+      <div class="ctrack"><div class="cfill" data-conf="${p.conf}" style="background:${p.c}"></div></div>
+      <div class="cpct" style="color:${p.c}">${p.conf}%</div>
+      <span class="ctag ${p.conf>=90?'sure':p.conf>=78?'high':'mid'}">${p.tag}</span>
+    </div>
+  </div>`).join('')}</div></div>
+  <div class="g2">
+    <div class="card"><div class="ct">🌊 Rising Topics 2025</div>
+    ${[{t:'Machine Learning Basics',p:'+42%',n:'Supervised/Unsupervised/Reinforcement — vocab marks'},
+       {t:'Cloud & IoT',p:'+38%',n:'Zigbee power, Amdahl, cloud service models (IaaS/PaaS/SaaS)'},
+       {t:'Cybersecurity Variants',p:'+35%',n:'Trojan/Virus/Worm distinctions + RSA variants'},
+       {t:'Big Data / OLAP / DW',p:'+30%',n:'Data cube (p+1)^n, OLAP vs OLTP, star schema'},
+       {t:'Federated Learning / GNN',p:'+25%',n:'Definition-level only. Easy vocabulary marks in 2025.'},
+    ].map(x=>`<div style="display:flex;gap:10px;padding:7px 0;border-bottom:1px solid var(--border);align-items:flex-start">
+      <span style="color:var(--green);font-size:.78rem;font-weight:800;min-width:38px">${x.p}</span>
+      <div><div style="font-size:.8rem;font-weight:700">${x.t}</div><div style="font-size:.68rem;color:var(--muted)">${x.n}</div></div>
+    </div>`).join('')}
+    </div>
+    <div class="card"><div class="ct">⚡ The Confusion Matrix (know these = +10 marks)</div>
+    ${[
+      {w:'Virtual function can be static',r:'CANNOT — static=compile-time, virtual=runtime'},
+      {w:"Belady's anomaly affects LRU",r:'FIFO ONLY — LRU is a stack algorithm'},
+      {w:'Fragment offset in TCP header',r:'IP header only (network layer)'},
+      {w:'2PL is optimistic protocol',r:'2PL = PESSIMISTIC (locks). Timestamp = OPTIMISTIC'},
+      {w:'A* optimal if h never underestimates',r:'Never OVERESTIMATES (admissible h≤h*)'},
+      {w:'L_REC ⊃ L_RE (Recursive contains RE)',r:'L_REC ⊂ L_RE (Recursive is SUBSET of RE)'},
+      {w:'Loop unrolling: fewer instructions',r:'Avoids loop TESTS at each iteration'},
+      {w:'BGP is application layer',r:'Network layer routing protocol'},
+      {w:'K4 is non-planar like K5',r:'K4 IS PLANAR. K5 and K3,3 are non-planar'},
+      {w:'init() is not first applet method',r:'init() IS FIRST. init→start→stop→destroy'},
+    ].map(x=>`<div class="conf-pair">
+      <div class="cf-wrong">✗ ${x.w}</div>
+      <div class="cf-right">✓ ${x.r}</div>
+    </div>`).join('')}
+    </div>
+  </div>`;
+}
+
+function renderEfficiency(){
+  const tierColors={S:'var(--gold)',A:'var(--green)',B:'var(--accent)',C:'var(--muted)'};
+  const tierBg={S:'rgba(245,197,24,.08)',A:'rgba(46,160,67,.08)',B:'rgba(79,158,255,.08)',C:'rgba(255,255,255,.02)'};
+  return `
+  ${ins('gold','⚡ Marks-per-Hour: The Highest Leverage Insight in This Entire Guide','Marks/Hour = (expected marks per exam from topic × 80% mastery factor) ÷ hours to master.<br>Study this table BEFORE making your study plan. <b>Start with Tier S and A topics — they give the most marks per hour of study.</b> Tier C topics have poor ROI for limited time.')}
+  <div class="card">
+    <div class="ct">📊 Efficiency Matrix — Marks Per Study Hour</div>
+    <div style="overflow-x:auto">
+    <table class="eff-table">
+      <thead><tr><th>Topic</th><th>Expected Marks</th><th>Study Hours</th><th>Marks/Hour</th><th>Tier</th><th>Verdict</th></tr></thead>
+      <tbody>
+      ${EFF.map(e=>{
+        const tierColor=tierColors[e.tier];
+        const tierBgC=tierBg[e.tier];
+        const verdict=e.tier==='S'?'🔴 DO FIRST':e.tier==='A'?'🟡 HIGH PRIORITY':e.tier==='B'?'🟢 MEDIUM':'⚫ SKIP (7-day)';
+        return `<tr style="background:${tierBgC}">
+          <td style="font-weight:600">${e.n}</td>
+          <td style="color:var(--accent);font-weight:700">${e.exp_m}</td>
+          <td>${e.hrs} hrs</td>
+          <td><span class="eff-tier-${e.tier.toLowerCase()}">${e.mhr}×</span></td>
+          <td><span style="color:${tierColor};font-weight:800;font-size:.8rem">${e.tier}</span></td>
+          <td style="font-size:.7rem;color:var(--muted)">${verdict}</td>
+        </tr>`;
+      }).join('')}
+      </tbody>
+    </table>
+    </div>
+  </div>
+
+  <div class="g2">
+    <div class="card"><div class="ct">📚 Prerequisite Dependency Trees</div>
+    <div class="ptree">
+<span class="root">▸ GRAPH ALGORITHMS</span>
+├─ <span class="hl">Graph representation</span> (adj list/matrix)
+│  ├─ BFS/DFS (traversal)
+│  │  ├─ <span class="hl">Dijkstra</span> (greedy + priority queue)
+│  │  └─ Topological Sort (DFS finish times)
+│  ├─ <span class="hl">Kruskal</span> (sort + union-find)
+│  └─ <span class="hl">Floyd-Warshall</span> (DP all pairs)
+
+<span class="root">▸ DATABASE NORMALIZATION</span>
+├─ Relational model (tuples, attributes)
+│  ├─ <span class="hl">Functional dependencies</span>
+│  │  ├─ Attribute closure A+
+│  │  ├─ <span class="hl">Candidate keys</span>
+│  │  └─ <span class="hl">3NF / BCNF</span> violations
+
+<span class="root">▸ THEORY OF COMPUTATION</span>
+├─ DFA/NFA (finite automata)
+│  ├─ <span class="hl">Subset construction</span> (NFA→DFA)
+│  ├─ Pumping lemma (regular)
+│  └─ CFG → <span class="hl">PDA</span>
+│     └─ <span class="hl">Pumping lemma CFL</span>
+
+<span class="root">▸ OS MEMORY</span>
+├─ Virtual memory concept
+│  ├─ Page tables → TLB
+│  │  └─ <span class="hl">EAT formula</span>
+│  └─ Page replacement
+│     └─ <span class="hl">LRU/FIFO/OPT</span>
+    </div></div>
+    <div class="card"><div class="ct">🔗 Subject Relationships (synergy map)</div>
+    ${[
+      {a:'DSA ↔ TOC',rel:'Both use formal complexity analysis. Learning recurrences (DSA) helps with pumping lemma logic (TOC).',c:'#4f9eff'},
+      {a:'OS ↔ CO',rel:'Memory hierarchy: cache (CO) → virtual memory (OS) → page replacement (OS). EAT bridges both.',c:'#2ea043'},
+      {a:'DBMS ↔ SE',rel:'Database normalization is a form of software design. Schema = code structure. Both deal with large system maintainability.',c:'#e06b1a'},
+      {a:'CN ↔ Security',rel:'Cryptography (RSA, AES) is applied within Network protocols. TCP/IP is the context for all security measures.',c:'#1abc9c'},
+      {a:'AI ↔ DM',rel:'Probability theory (DM), graph search (DM graph theory), and logic (DM proofs) are the mathematical foundation of AI.',c:'#a371f7'},
+      {a:'TOC ↔ CD',rel:'Compiler design directly uses TOC: lexer=DFA, parser=CFL/CFG, code=formal language theory. TOC first = CD easier.',c:'#c084fc'},
+    ].map(x=>`<div style="display:flex;gap:9px;padding:7px 0;border-bottom:1px solid var(--border);align-items:flex-start">
+      <div style="font-size:.78rem;font-weight:800;color:${x.c};min-width:100px">${x.a}</div>
+      <div style="font-size:.7rem;color:var(--muted);flex:1">${x.rel}</div>
+    </div>`).join('')}
+    <div style="margin-top:10px;padding:9px;background:rgba(79,158,255,.06);border-radius:6px;border:1px solid rgba(79,158,255,.2);font-size:.72rem;color:#79c0ff">
+      💡 Study Pairing Tip: Study DSA on Day 1 → TOC on Day 2 (synergy). OS on Day 3 → CO on Day 4 (synergy). Don't study unrelated subjects back-to-back.
+    </div>
+    </div>
+  </div>`;
+}
+
+function renderSimulator(){
+  const sliders=[
+    {id:'dsa',n:'DSA + Graph Algorithms',p2:11,c:'#4f9eff',mhr:2.7},
+    {id:'os',n:'Operating Systems',p2:8,c:'#2ea043',mhr:2.5},
+    {id:'dbms',n:'DBMS',p2:8,c:'#e06b1a',mhr:2.6},
+    {id:'toc',n:'Theory of Computation',p2:5,c:'#a371f7',mhr:2.1},
+    {id:'cn',n:'Computer Networks',p2:7,c:'#1abc9c',mhr:2.1},
+    {id:'co',n:'Digital Logic + CO',p2:5,c:'#d1a022',mhr:2.4},
+    {id:'prog',n:'Programming + OOP',p2:6,c:'#da3633',mhr:1.9},
+    {id:'se',n:'Software Engineering',p2:5,c:'#ff6b8a',mhr:2.0},
+    {id:'dm',n:'Discrete Mathematics',p2:5,c:'#79c0ff',mhr:1.9},
+    {id:'ai',n:'AI + ML + Fuzzy',p2:3,c:'#2ea043',mhr:1.8},
+    {id:'cd',n:'Compiler Design',p2:2,c:'#c084fc',mhr:1.4},
+    {id:'cg',n:'Graphics + Image Processing',p2:1,c:'#e06b1a',mhr:0.9},
+  ];
+  return `
+  ${ins('purple','🏆 The JRF Score Equation','<b>JRF (~205/300)</b> = Paper I (~68/100) + Paper II CS (~137/200)<br><b>NET qualifying (~170/300)</b> = Paper I (~60/100) + Paper II (~110/200)<br><b>The delta = 35 marks.</b> This comes from: (1) better Paper I prep [+8 marks], (2) mastering 3-4 more CS topics [+16 marks], (3) avoiding all 10 traps [+10 marks].')}
+  <div class="card"><div class="ct">⚡ Live Score Simulator — Drag sliders to see expected score</div>
+  <div class="g2">
+    <div>
+      <div id="simWrap">${sliders.map(s=>`<div class="sim-row">
+        <div class="sim-lbl" style="border-left:3px solid ${s.c}">
+          ${s.n}
+          <span class="sim-marks">P2: ${s.p2}Q avg · ROI: ${s.mhr}M/h</span>
+        </div>
+        <input type="range" min="0" max="100" value="50" data-sid="${s.id}" data-p2="${s.p2}" style="accent-color:${s.c}">
+        <div class="sim-pct" id="sp-${s.id}" style="color:${s.c}">50%</div>
+      </div>`).join('')}</div>
+      <div style="margin-top:10px;padding:9px;background:rgba(79,158,255,.06);border-radius:7px;font-size:.72rem;color:#79c0ff;border:1px solid rgba(79,158,255,.2)">
+        💡 <b>Paper I assumed 65/100</b> (CS student baseline). Adjust your study plan until the score box shows 🏆 JRF!
+      </div>
+    </div>
+    <div>
+      <div class="scorebox glowing">
+        <div style="font-size:.68rem;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;margin-bottom:8px">Expected Total Score</div>
+        <div class="score-num" id="scoreNum" style="color:var(--yellow)">130</div>
+        <div style="font-size:.82rem;color:var(--muted);margin-top:5px" id="scoreSub">/300 (43%) — P-I: 65</div>
+        <div class="score-track" style="margin-top:14px">
+          <div class="score-fill" id="scoreBar" style="width:43%;background:var(--yellow)"></div>
+          <div class="score-line" style="left:68.3%;background:var(--green)"><div class="score-lbl" style="background:var(--green);color:#fff">JRF</div></div>
+          <div class="score-line" style="left:56.7%;background:var(--yellow)"><div class="score-lbl" style="background:var(--yellow);color:#000">NET</div></div>
+        </div>
+        <div class="sg2">
+          <div class="sg"><div class="sg-v" id="p2score">65</div><div class="sg-l">Paper II / 200</div></div>
+          <div class="sg"><div id="scoreStatus" style="font-size:.85rem;font-weight:900;color:var(--red)">❌ Below NET</div><div class="sg-l" id="scoreHint">+40 more for NET</div></div>
+        </div>
+      </div>
+      <div class="card mt8" style="padding:12px"><div class="ct">🎯 JRF Delta Topics (top 10% marks)</div>
+      ${[{t:'TOC: Undecidability Proofs',hrs:'4hrs',w:'JRF needs rice\'s theorem; NET only halting problem definition'},
+         {t:'DSA: NP-hard Reductions',hrs:'3hrs',w:'CLR-style reductions appear in JRF-level papers'},
+         {t:'DBMS: Conflict Serializability',hrs:'2hrs',w:'Precedence graphs for schedule analysis'},
+         {t:'CO: Advanced Cache (Associativity)',hrs:'2hrs',w:'Set-associative mapping appears in JRF'},
+         {t:'DSA: Amortized Analysis',hrs:'3hrs',w:'Potential method and aggregate analysis'},
+      ].map(x=>`<div style="padding:6px 0;border-bottom:1px solid var(--border)">
+        <div style="font-size:.78rem;font-weight:700;color:var(--orange)">${x.t}</div>
+        <div style="font-size:.68rem;color:var(--muted);margin:2px 0">${x.w}</div>
+        <span style="font-size:.64rem;background:rgba(224,107,26,.12);color:var(--orange);border-radius:3px;padding:1px 6px">~${x.hrs}</span>
+      </div>`).join('')}
+      </div>
+    </div>
+  </div></div>
+  <div class="card"><div class="ct">📋 Paper I Quick Bible for CS Students (100 marks — 1/3 of total!)</div>
+  <div class="g2">
+    <div><div style="font-size:.78rem;font-weight:800;color:var(--green);margin-bottom:9px">✅ FREE Marks (CS background advantage) — ~30 marks</div>
+    ${[{t:'Mathematical Reasoning (5-6 Qs)',n:'Number series, logical puzzles — CS mindset excels here',hrs:'2hrs',m:'+10'},
+       {t:'Data Interpretation Tables (5 Qs)',n:'Read tables, calculate ratios — straightforward',hrs:'2hrs',m:'+9'},
+       {t:'ICT Basics (4-5 Qs)',n:'Computer fundamentals — you already know this',hrs:'1hr',m:'+8'},
+       {t:'Logical Reasoning (5 Qs)',n:'Syllogisms, Venn diagrams — CS pattern recognition',hrs:'2hrs',m:'+9'},
+    ].map(x=>`<div style="padding:7px 0;border-bottom:1px solid var(--border)">
+      <div style="display:flex;align-items:center;gap:8px;margin-bottom:2px">
+        <span style="font-size:.8rem;font-weight:700">${x.t}</span>
+        <span style="color:var(--green);font-size:.72rem;font-weight:700;margin-left:auto">${x.m}</span>
+      </div>
+      <div style="font-size:.7rem;color:var(--muted)">${x.n} · ${x.hrs}</div>
+    </div>`).join('')}
+    </div>
+    <div><div style="font-size:.78rem;font-weight:800;color:var(--yellow);margin-bottom:9px">⚡ Invest 4 hrs for extra 20 marks</div>
+    ${[{t:'Higher Education System (5-6 Qs)',n:'NEP 2020, UGC rules, NAAC levels — memorize key facts',hrs:'1.5hrs',m:'+10'},
+       {t:'Research Aptitude (5-6 Qs)',n:'Research types, hypothesis, sampling methods',hrs:'1.5hrs',m:'+8'},
+       {t:'Environment (5-6 Qs)',n:'Current issues — 1 hour reading is enough',hrs:'1hr',m:'+7'},
+       {t:'Teaching Aptitude (5-6 Qs)',n:'Principles of teaching — Bloom\'s taxonomy must know',hrs:'1hr',m:'+7'},
+    ].map(x=>`<div style="padding:7px 0;border-bottom:1px solid var(--border)">
+      <div style="display:flex;align-items:center;gap:8px;margin-bottom:2px">
+        <span style="font-size:.8rem;font-weight:700">${x.t}</span>
+        <span style="color:var(--yellow);font-size:.72rem;font-weight:700;margin-left:auto">${x.m}</span>
+      </div>
+      <div style="font-size:.7rem;color:var(--muted)">${x.n} · ${x.hrs}</div>
+    </div>`).join('')}
+    </div>
+  </div>
+  <div style="margin-top:10px;padding:9px;background:rgba(46,160,67,.06);border-radius:6px;border:1px solid rgba(46,160,67,.25);font-size:.74rem;color:#2ea043;font-weight:700">
+    🎯 Target Paper I: 68-72/100 with just 6-8 hrs of prep. This alone covers 1/3 of the JRF-NET gap (35 marks needed). CS students who prep Paper I properly consistently clear JRF while those who ignore it consistently miss.
+  </div></div>`;
+}
+
+function renderArsenal(){
+  const catColors={Formula:'#4f9eff',Concept:'#2ea043',Trap:'#da3633',Mnemonic:'#a371f7'};
+  return `
+  ${ins('tip','🃏 Active Recall Arsenal — 3× More Effective Than Re-Reading','Research: active recall produces 3× better long-term retention. Use these cards during commute, meals, or before sleep. The TRAPS category is most valuable the night before exam — these alone are worth +10 marks.')}
+  <div class="chips" id="fcCats">
+    ${['All','Formula','Concept','Trap','Mnemonic'].map(c=>`<span class="chip ${c==='All'?'on':''}" data-fcat="${c}">${c}</span>`).join('')}
+  </div>
+  <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px">
+    <button class="btn" id="fcPrev">← Prev</button>
+    <div style="font-size:.8rem;color:var(--muted)">Card <span id="fcNum">1</span> of <span id="fcTotal">${FCARDS.length}</span> · <span id="fcCatLabel" style="color:var(--accent)">All</span></div>
+    <button class="btn" id="fcNext">Next →</button>
+  </div>
+  <div class="fc-wrap" id="fcWrap">
+    <div class="fc-inner" id="fcInner">
+      <div class="fc-face fc-front">
+        <div class="fc-cat" id="fcFrontCat">Formula</div>
+        <div class="fc-q" id="fcQuestion">Loading...</div>
+        <div class="fc-hint">Tap to reveal answer ↩</div>
+      </div>
+      <div class="fc-face fc-back">
+        <div class="fc-cat" id="fcBackCat" style="color:var(--cyan)">ANSWER</div>
+        <div class="fc-a" id="fcAnswer"></div>
+        <div class="fc-hint" id="fcHint" style="color:var(--accent)"></div>
+      </div>
+    </div>
+  </div>
+  <div class="card mt8"><div class="ct">📋 Last-Hour Cheat Sheet (review morning of exam)</div>
+  <div class="fgrid">${FMLS.map(x=>`<div class="fcard"><span class="ftag">${x.t}</span>${x.f}</div>`).join('')}</div>
+  <div class="sep"></div>
+  <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:7px">
+  ${[
+    {t:'TRAPS',items:['Virtual CANNOT be static','Belady = FIFO only (not LRU)','Fragment offset = IP header','2PL = pessimistic','A* admissible = never OVERESTIMATES']},
+    {t:'MNEMONICS',items:['OSI: Please Do Not Touch Steve\'s Pet Alligator','CMM: Initially Robots Define Machines Optimally','Deadlock: MHCN (Must Have Circular Needs)','1NF-BCNF: Every Good Student Can Be Better','Interrupt priority: TRAP 7.5 6.5 5.5 INTR']},
+    {t:'QUICK FACTS',items:['RSA: n=pq; φ(n)=(p-1)(q-1); C=Mᵉ mod n','Banker: Need=Max-Alloc; safe if Need≤Avail','EAT=h×Tc+(1-h)×(Tc+Tm)','Stars&bars: C(n+k-1,k-1)','Master T Case 2: f(n)=Θ(n^log_b_a)→×log n']},
+  ].map(x=>`<div class="card" style="padding:11px">
+    <div style="font-size:.7rem;font-weight:700;color:var(--accent);margin-bottom:7px;text-transform:uppercase;letter-spacing:.5px">${x.t}</div>
+    ${x.items.map(i=>`<div style="font-size:.7rem;padding:3px 0;border-bottom:1px solid var(--border);color:var(--muted)">· ${i}</div>`).join('')}
+  </div>`).join('')}
+  </div></div>`;
+}
+
+function renderWarRoom(){
+  return `
+  ${ins('fire','⚔️ Exam War Room — Strategy Beats Knowledge','100 questions in 120 minutes (NTA). No negative marking. The candidate who finishes with 2 minutes to spare and reviews skipped questions outperforms the one who gets stuck on hard questions and runs out of time.')}
+  <div class="tgrid">
+    ${[{i:'🎯',t:'Attack Order',v:'Easy First',s:'Match→Recall→Calc→Concept→Code'},
+       {i:'⏱️',t:'Time per Q',v:'1.2 min avg',s:'100Q in 120 min (NTA P2)'},
+       {i:'⚡',t:'Quick Wins',v:'~20 Q',s:'< 1 min each = save 20 min buffer'},
+       {i:'🔄',t:'Skip Rule',v:'>2.5 min? Skip',s:'Mark & return at end'},
+       {i:'📝',t:'Guess Rule',v:'ALWAYS guess',s:'No negative marking!'},
+       {i:'🏆',t:'JRF Target',v:'65/100',s:'130/200 marks on Paper II'},
+       {i:'💡',t:'Last 15 min',v:'Fill ALL blanks',s:'Random = 25% chance = free marks'},
+       {i:'🧠',t:'Energy tactic',v:'Skip Q40-60',s:'Brain fatigues at midpoint; return fresh'},
+    ].map(x=>`<div class="tbox"><div class="tbox-icon">${x.i}</div><div class="tbox-title">${x.t}</div><div class="tbox-val">${x.v}</div><div class="tbox-sub">${x.s}</div></div>`).join('')}
+  </div>
+  <div class="g2">
+    <div class="card"><div class="ct">🏃 Optimal Attack Order (marks per minute)</div>
+    ${[{o:1,t:'Match the Following',q:'~15Q',tm:'~1 min',w:'Pattern recognition, fastest return',c:'#2ea043'},
+       {o:2,t:'Direct Recall',q:'~10Q',tm:'~0.7 min',w:'Vocabulary/definition = no calculation',c:'#4f9eff'},
+       {o:3,t:'Formula Calculations',q:'~15Q',tm:'~2 min',w:'RSA, Banker\'s, EAT — confident and correct',c:'#d1a022'},
+       {o:4,t:'Conceptual (true/false)',q:'~15Q',tm:'~1.5 min',w:'Requires careful reading + logic',c:'#e06b1a'},
+       {o:5,t:'Code Analysis/Output',q:'~10Q',tm:'~2.5 min',w:'Trace execution — most time-consuming',c:'#da3633'},
+       {o:6,t:'Return to skipped',q:'remaining',tm:'Budget time',w:'Always better than blank answers',c:'#a371f7'},
+    ].map(x=>`<div style="display:flex;gap:10px;padding:8px 0;border-bottom:1px solid var(--border);align-items:flex-start">
+      <div style="background:${x.c}22;color:${x.c};border:1px solid ${x.c}44;border-radius:6px;width:28px;height:28px;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:.85rem;flex-shrink:0">${x.o}</div>
+      <div><div style="font-size:.8rem;font-weight:700;color:${x.c}">${x.t}</div>
+      <div style="font-size:.68rem;color:var(--muted)">${x.q} · ${x.tm} avg · ${x.w}</div></div>
+    </div>`).join('')}
+    </div>
+    <div class="card"><div class="ct">📅 24-Hour Pre-Exam Protocol</div>
+    ${[{t:'24h before',a:'No new material! Only revision. Full mock exam (100Q timed). Identify top 5 weak spots.',c:'#e06b1a'},
+       {t:'12h before',a:'Review flash cards (Traps category first). Re-read formula sheet. Light study only.',c:'#d1a022'},
+       {t:'Evening',a:'Confirm exam slot, hall ticket, stationery. Eat well. Sleep by 10:30 PM.',c:'#2ea043'},
+       {t:'Morning',a:'Wake up 2hrs early. Light breakfast. Review formulas one final time (20 min max).',c:'#4f9eff'},
+       {t:'At exam hall',a:'Arrive 30 min early. No discussions. Mental rehearsal of attack strategy.',c:'#a371f7'},
+       {t:'First 5 min',a:'Scan all 100 questions. Mark easy ones. Identify quick wins before starting.',c:'#2ea043'},
+       {t:'Every 30 min',a:'Check progress: should be ~25Q done. If behind, skip harder questions.',c:'#da3633'},
+       {t:'Last 15 min',a:'Fill ALL unanswered questions. Never leave blank.',c:'#d1a022'},
+    ].map(x=>`<div style="display:flex;gap:10px;padding:7px 0;border-bottom:1px solid var(--border)">
+      <div style="font-size:.7rem;font-weight:700;color:${x.c};min-width:80px">${x.t}</div>
+      <div style="font-size:.7rem;color:var(--muted);flex:1">${x.a}</div>
+    </div>`).join('')}
+    </div>
+  </div>
+  <div class="card"><div class="ct">🧠 Question DNA — 5 Types of Questions + How to Approach Each</div>
+  <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:8px">
+  ${[
+    {type:'Type 1: Direct Recall',ex:'"Which interrupt has highest priority in 8085?"',approach:'Answer from memory immediately. 0.7 min.',c:'#2ea043'},
+    {type:'Type 2: Match the Following',ex:'"Match graph algorithms with time complexities"',approach:'Eliminate wrong matches first. 1 min.',c:'#4f9eff'},
+    {type:'Type 3: Calculation',ex:'"RSA: p=3, q=11, e=3, M=5, find C"',approach:'Formula → substitute → calculate. 2 min.',c:'#d1a022'},
+    {type:'Type 4: Application',ex:'"Is system in safe state? Find safe sequence"',approach:'Follow algorithm systematically. 3 min.',c:'#e06b1a'},
+    {type:'Type 5: Trap/Twist',ex:'"Virtual function can be static: TRUE/FALSE?"',approach:'Identify the trap keyword first. 0.5 min.',c:'#da3633'},
+  ].map(x=>`<div style="background:${x.c}11;border:1px solid ${x.c}33;border-radius:8px;padding:11px">
+    <div style="font-size:.76rem;font-weight:800;color:${x.c};margin-bottom:5px">${x.type}</div>
+    <div style="font-size:.68rem;color:var(--muted);font-style:italic;margin-bottom:5px">"${x.ex}"</div>
+    <div style="font-size:.7rem;color:var(--text)">${x.approach}</div>
+  </div>`).join('')}
+  </div></div>
+  ${ins('warn','🚨 Last-Hour Formula Card (read morning of exam — 20 min max)','<b>EAT</b>=h×Tc+(1-h)×(Tc+Tm) · <b>RSA</b>: n=pq, C=Mᵉ mod n · <b>Banker\'s</b>: Need=Max-Alloc · <b>Avg wait</b>=Avg TAT-burst · <b>Pumping CFL</b>: |vxy|≤m AND |vy|≥1 · <b>BCNF</b>: every determinant=superkey · <b>Double hash</b>: (h1+ih2) mod m · <b>Stars&bars</b>: C(n+k-1,k-1) · <b>Amdahl</b>: 1/(1-f) max · <b>TRAPS</b>: virtual≠static · 2PL=pessimistic · Belady=FIFO only · K4 is planar · A* admissible = never overestimates')}`;
+}
+
+function renderCampaign(){
+  return `
+  <div style="display:flex;gap:7px;margin-bottom:12px">
+    ${[7,15].map(n=>`<button class="btn plan-btn ${n===7?'on':''}" data-days="${n}">${n}-Day Campaign</button>`).join('')}
+  </div>
+  ${ins('tip','⚡ 20/80 Principle Applied to This Plan','DSA+OS+DBMS+TOC = 70% of Paper III marks and 60% of Paper II. For 7-day plan: skip Computer Graphics entirely, skip deep Compiler Design (keep LL/LR only). The time saved = 5 more correct DSA answers = +10 marks.')}
+  <div id="planCards"></div>
+  <div class="card"><div class="ct">⚡ Spaced Repetition Schedule (how to retain formulas)</div>
+  <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:8px">
+  ${[{t:'Learn formula',d:'Day of study',n:'Read, write, understand derivation'},
+     {t:'First review',d:'+24 hours',n:'Flash card: answer from memory'},
+     {t:'Second review',d:'+72 hours',n:'Apply to practice problem'},
+     {t:'Third review',d:'+1 week',n:'Apply to past paper question'},
+     {t:'Fourth review',d:'Exam eve',n:'Final formula sheet scan'},
+  ].map((x,i)=>`<div style="background:var(--card2);border:1px solid var(--border);border-radius:7px;padding:10px;position:relative">
+    <div style="font-size:.65rem;color:var(--accent);font-weight:700;margin-bottom:3px">Step ${i+1}: ${x.t}</div>
+    <div style="font-size:.8rem;font-weight:700;color:var(--gold)">${x.d}</div>
+    <div style="font-size:.68rem;color:var(--muted);margin-top:3px">${x.n}</div>
+  </div>`).join('')}
+  </div>
+  <div style="margin-top:9px;padding:9px;background:rgba(79,158,255,.06);border-radius:6px;font-size:.72rem;color:#79c0ff;border:1px solid rgba(79,158,255,.2)">
+    💡 Formulas decay 60% in 72 hours without review. If you study Banker's algorithm today and don't review it in 3 days, you'll struggle to recall it under exam pressure. Use flash cards during commute = zero extra time investment.
+  </div></div>
+  <div class="card"><div class="ct">⚡ 20 Must-Know Formulas</div>
+  <div class="fgrid">${FMLS.map(x=>`<div class="fcard"><span class="ftag">${x.t}</span>${x.f}</div>`).join('')}</div>
+  </div>`;
+}
+
+function renderIntelligence(){
+  return `
+  <div class="g2 mb8">
+    <div class="card"><div class="ct">📄 Paper II (NTA): 100Q × 2 = 200 marks</div>
+    ${bar([{n:'DSA + Graph Theory',v:22,c:'#4f9eff'},{n:'DBMS',v:16,c:'#e06b1a'},{n:'Computer Networks',v:14,c:'#1abc9c'},{n:'Operating Systems',v:12,c:'#2ea043'},{n:'Programming C/C++',v:10,c:'#da3633'},{n:'Software Engineering',v:10,c:'#ff6b8a'},{n:'Discrete Math',v:8,c:'#79c0ff'},{n:'AI/ML/IoT/Misc',v:8,c:'#56d364'}])}
+    </div>
+    <div class="card"><div class="ct">📘 Paper III (Old UGC): 75Q × 2 = 150 marks</div>
+    ${bar([{n:'DSA + Graph Theory',v:20,c:'#4f9eff'},{n:'Theory of Computation',v:18,c:'#a371f7'},{n:'OS + Memory',v:16,c:'#2ea043'},{n:'DBMS',v:12,c:'#e06b1a'},{n:'Computer Networks',v:10,c:'#1abc9c'},{n:'AI + Image Processing',v:10,c:'#2ea043'},{n:'Digital Logic + CO',v:8,c:'#d1a022'},{n:'Misc',v:6,c:'#636e7b'}])}
+    </div>
+  </div>
+  <div class="card"><div class="ct">📈 Topic Weight Trends: Old UGC vs NTA 2018+</div>
+  <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:7px">
+  ${[{t:'Graph Algorithms',o:92,n:96,d:'→'},{t:"Banker's/OS",o:88,n:93,d:'↑'},
+     {t:'Normalization',o:94,n:90,d:'↓'},{t:'Theory of Computation',o:90,n:85,d:'↓'},
+     {t:'Machine Learning',o:12,n:65,d:'↑↑'},{t:'Cloud/IoT',o:5,n:55,d:'↑↑'},
+     {t:'8085 Microprocessor',o:72,n:28,d:'↓↓'},{t:'Software Engineering',o:58,n:72,d:'↑'},
+     {t:'Computer Graphics',o:65,n:42,d:'↓'},{t:'Fuzzy Logic',o:30,n:50,d:'↑'},
+     {t:'Data Warehousing',o:20,n:48,d:'↑'},{t:'Discrete Math',o:75,n:60,d:'↓'},
+  ].map(x=>{const isUp=x.d.includes('↑'),c=isUp?'var(--green)':'var(--red)';
+    return `<div style="background:var(--card2);border:1px solid var(--border);border-radius:7px;padding:9px">
+      <div style="font-size:.7rem;font-weight:700;margin-bottom:5px">${x.t}</div>
+      <div style="display:flex;align-items:center;gap:5px">
+        <span style="font-size:.66rem;color:var(--muted)">Old:<b style="color:var(--yellow)">${x.o}%</b></span>
+        <span style="color:${c};font-size:.88rem;font-weight:900">${x.d}</span>
+        <span style="font-size:.66rem;color:var(--muted)">NTA:<b style="color:${c}">${x.n}%</b></span>
+      </div></div>`;}).join('')}
+  </div></div>
+  ${ins('glow','🎯 2025 NTA Predictions: What\'s Coming','<b>High Confidence (>85%):</b> Blockchain basics (definition), Federated Learning concept, Graph Neural Network definition, QUIC protocol mention, IPv6 addressing calculation, Edge Computing vs Cloud comparison.<br><b>Pattern shift:</b> NTA moving toward "identify the false statement" format for multi-correct answers — <b>practice this question type specifically</b> in your mock exams. 60%+ of recent NTA papers use this format for conceptual questions.')}`;
+}
+
+
+// ════════ INITIALIZATION ════════
+document.addEventListener('DOMContentLoaded',()=>{
+  // Render all panels
+  document.getElementById('tab-doctrine').innerHTML=renderDoctrine();
+  document.getElementById('tab-taxonomy').innerHTML=renderTaxonomy();
+  document.getElementById('tab-oracle').innerHTML=renderOracle();
+  document.getElementById('tab-efficiency').innerHTML=renderEfficiency();
+  document.getElementById('tab-simulator').innerHTML=renderSimulator();
+  document.getElementById('tab-arsenal').innerHTML=renderArsenal();
+  document.getElementById('tab-warroom').innerHTML=renderWarRoom();
+  document.getElementById('tab-campaign').innerHTML=renderCampaign();
+  document.getElementById('tab-intel').innerHTML=renderIntelligence();
+
+  // ── Tabs ──
+  document.querySelectorAll('.tabBtn').forEach(btn=>{
+    btn.addEventListener('click',()=>{
+      document.querySelectorAll('.tabBtn').forEach(b=>b.classList.remove('on'));
+      document.querySelectorAll('.panel').forEach(p=>p.classList.remove('on'));
+      btn.classList.add('on');
+      const p=document.getElementById('tab-'+btn.dataset.tab);
+      if(p){p.classList.add('on');initTabContent(btn.dataset.tab);}
+    });
+  });
+
+  // Init first tab
+  initTabContent('doctrine');
+  initTabContent('taxonomy');
+  initTabContent('arsenal');
+  initTabContent('campaign');
+
+  // ── Confidence bars (animate after load) ──
+  setTimeout(()=>{
+    document.querySelectorAll('.cfill').forEach(el=>{
+      const c=el.dataset.conf;
+      if(c) el.style.width=c+'%';
+    });
+  },400);
+
+  // ── Accordion ──
+  document.addEventListener('click',e=>{
+    const acc=e.target.closest('.acc');
+    if(acc&&!e.target.closest('.acc-body')){acc.classList.toggle('open');}
+  });
+});
+
+function initTabContent(tabId){
+  if(tabId==='taxonomy'||tabId==='doctrine') initTaxonomy();
+  if(tabId==='simulator') initSimulator();
+  if(tabId==='arsenal') initArsenal();
+  if(tabId==='campaign') initCampaign();
+  if(tabId==='oracle') setTimeout(()=>{document.querySelectorAll('.cfill').forEach(el=>{const c=el.dataset.conf;if(c)el.style.width=c+'%';});},300);
+  // Animate bars
+  setTimeout(()=>{document.querySelectorAll('.bfill').forEach(el=>{const w=el.style.width;el.style.width='0';requestAnimationFrame(()=>setTimeout(()=>el.style.width=w,10));});},100);
+}
+
+// ── Taxonomy filters ──
+let subFilter='all';
+function initTaxonomy(){
+  if(!document.getElementById('taxBarChart')) return;
+  renderTaxContent();
+  const chips=document.getElementById('subChips');
+  if(chips&&!chips._init){chips._init=true;chips.addEventListener('click',e=>{
+    const chip=e.target.closest('.chip[data-filter]');
+    if(!chip)return;
+    subFilter=chip.dataset.filter;
+    document.querySelectorAll('#subChips .chip').forEach(c=>c.classList.toggle('on',c.dataset.filter===subFilter));
+    renderTaxContent();
+  });}
+}
+function renderTaxContent(){
+  const subs=subFilter==='all'?SUBS:SUBS.filter(s=>s.id===subFilter);
+  const all=subs.flatMap(s=>s.topics.map(t=>({...t,sc:s.c,ss:s.s}))).sort((a,b)=>b.heat-a.heat);
+  const chart=document.getElementById('taxBarChart');
+  if(chart) chart.innerHTML='<div class="ct">Topic Heat Score (sorted by exam frequency)</div>'+bar(all.map(t=>({n:`[${t.ss}] ${t.n}`,v:t.heat,c:t.sc})));
+  const cards=document.getElementById('taxCards');
+  if(cards) cards.innerHTML=subs.map(s=>`<div class="card">
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px;padding-bottom:10px;border-bottom:1px solid var(--border)">
+      <div style="width:12px;height:12px;border-radius:3px;background:${s.c}"></div>
+      <span style="font-weight:800;font-size:.95rem">${s.n}</span>
+      <div style="margin-left:auto;display:flex;gap:10px;font-size:.7rem;color:var(--muted)">
+        <span>P2: <b style="color:var(--text)">${s.p2}Q avg</b></span>
+        <span>P3: <b style="color:var(--text)">${s.p3||'—'}Q avg</b></span>
+        <span>${s.days}d to master</span>
+        <span style="color:${s.mhrTier==='S'?'var(--gold)':s.mhrTier==='A'?'var(--green)':'var(--accent)'}">ROI: ${s.mhrTier} tier</span>
+      </div>
+    </div>
+    ${s.topics.map(t=>accItem(t,s.c)).join('')}
+  </div>`).join('');
+}
+
+// ── Score Simulator ──
+function initSimulator(){
+  const wrap=document.getElementById('simWrap');
+  if(!wrap||wrap._init) return;
+  wrap._init=true;
+  wrap.addEventListener('input',e=>{
+    if(e.target.type==='range') updateScore();
+  });
+  updateScore();
+}
+function updateScore(){
+  const sliders=document.querySelectorAll('#simWrap input[type=range]');
+  let p2cs=0;
+  sliders.forEach(s=>{
+    const pct=parseInt(s.value);
+    p2cs+=parseInt(s.dataset.p2)*(pct/100)*2;
+    const lbl=document.getElementById('sp-'+s.dataset.sid);
+    if(lbl) lbl.textContent=pct+'%';
+  });
+  p2cs=Math.round(p2cs);
+  const total=65+p2cs;
+  const pct=Math.round(total/300*100);
+  const c=total>=205?'var(--green)':total>=170?'var(--yellow)':'var(--red)';
+  const n=document.getElementById('scoreNum');
+  const sb=document.getElementById('scoreSub');
+  const bf=document.getElementById('scoreBar');
+  const p2=document.getElementById('p2score');
+  const st=document.getElementById('scoreStatus');
+  const sh=document.getElementById('scoreHint');
+  if(n){n.textContent=total;n.style.color=c;}
+  if(sb) sb.textContent=`/300 (${pct}%) — P-I: 65`;
+  if(bf){bf.style.width=pct+'%';bf.style.background=c;}
+  if(p2) p2.textContent=p2cs;
+  if(st){st.style.color=c;st.textContent=total>=205?'🏆 JRF!':total>=170?'✅ NET':'❌ Below NET';}
+  if(sh) sh.textContent=total>=205?'🎉 You\'ve cleared JRF!':total>=170?`${205-total} more for JRF`:`${170-total} more for NET`;
+}
+
+// ── Flash Cards ──
+let fcCat='All',fcIdx=0;
+const catColors={Formula:'#4f9eff',Concept:'#2ea043',Trap:'#da3633',Mnemonic:'#a371f7'};
+function getFCards(){return fcCat==='All'?FCARDS:FCARDS.filter(c=>c.cat===fcCat);}
+function updateCard(){
+  const cards=getFCards();
+  if(!cards.length) return;
+  const c=cards[fcIdx%cards.length];
+  const inner=document.getElementById('fcInner');
+  if(inner) inner.classList.remove('flipped');
+  const col=catColors[c.cat]||'#4f9eff';
+  const set=(id,val,style)=>{const el=document.getElementById(id);if(el){el.textContent=val||'';if(style)Object.assign(el.style,style);}};
+  set('fcQuestion',c.q);set('fcAnswer',c.a);set('fcHint',c.hint?'💡 '+c.hint:'');
+  set('fcFrontCat',c.cat,{color:col});set('fcBackCat','ANSWER',{color:col});
+  set('fcNum',(fcIdx%cards.length)+1);set('fcTotal',cards.length);
+  set('fcCatLabel',fcCat,{color:col});
+  document.querySelectorAll('.fc-idx-item').forEach(el=>{
+    const on=parseInt(el.dataset.idx)===FCARDS.indexOf(c);
+    el.style.borderColor=on?col:'var(--border)';
+    el.style.background=on?col+'18':'rgba(255,255,255,.025)';
+    el.style.color=on?'var(--text)':'var(--muted)';
+  });
+}
+function initArsenal(){
+  if(document.getElementById('fcWrap')&&document.getElementById('fcWrap')._init) return;
+  if(!document.getElementById('fcWrap')) return;
+  document.getElementById('fcWrap')._init=true;
+  updateCard();
+  const arsenalTab=document.getElementById('tab-arsenal');
+  if(arsenalTab&&!arsenalTab._init){arsenalTab._init=true;arsenalTab.addEventListener('click',e=>{
+    if(e.target.closest('#fcNext')){fcIdx=(fcIdx+1)%getFCards().length;updateCard();}
+    else if(e.target.closest('#fcPrev')){fcIdx=(fcIdx-1+getFCards().length)%getFCards().length;updateCard();}
+    else if(e.target.closest('#fcWrap')){const inner=document.getElementById('fcInner');if(inner)inner.classList.toggle('flipped');}
+    else{
+      const chip=e.target.closest('.chip[data-fcat]');
+      if(chip){fcCat=chip.dataset.fcat;fcIdx=0;document.querySelectorAll('#fcCats .chip').forEach(c=>c.classList.toggle('on',c.dataset.fcat===fcCat));updateCard();}
+      const idx=e.target.closest('.fc-idx-item');
+      if(idx){const i=parseInt(idx.dataset.idx);const fi=getFCards().indexOf(FCARDS[i]);if(fi>=0){fcIdx=fi;updateCard();}}
+    }
+  });}
+  // Build index
+  const indexEl=document.getElementById('fcIndex');
+  if(indexEl&&!indexEl.children.length){
+    indexEl.innerHTML=FCARDS.map((c,i)=>`<div class="fc-idx-item" data-idx="${i}" style="background:rgba(255,255,255,.025);border:1px solid var(--border);border-radius:6px;padding:6px 10px;cursor:pointer;font-size:.68rem;color:var(--muted)"><span style="color:${catColors[c.cat]||'#4f9eff'};font-weight:700;margin-right:4px">[${c.cat}]</span>${c.q.substring(0,52)}${c.q.length>52?'...':''}</div>`).join('');
+  }
+}
+
+// ── Campaign ──
+function initCampaign(){
+  const btn=document.querySelector('.plan-btn');
+  if(!btn) return;
+  renderPlanCards(7);
+  const campTab=document.getElementById('tab-campaign');
+  if(campTab&&!campTab._init){campTab._init=true;campTab.addEventListener('click',e=>{
+    const b=e.target.closest('.plan-btn');
+    if(!b) return;
+    const days=parseInt(b.dataset.days);
+    document.querySelectorAll('.plan-btn').forEach(x=>{
+      const on=parseInt(x.dataset.days)===days;
+      x.classList.toggle('on',on);
+    });
+    renderPlanCards(days);
+  });}
+}
+function renderPlanCards(days){
+  const pc=document.getElementById('planCards');
+  if(!pc) return;
+  pc.innerHTML=PLANS[days].map(p=>`<div class="dcard" style="border-color:${p.c}">
+    <div class="dcard-day" style="color:${p.c}">${p.day}</div>
+    <div class="dcard-top">${p.topic}</div>
+    <div class="ditems">${p.items.map(x=>`<span class="ditem">${x}</span>`).join('')}</div>
+    <div class="dmeta"><span>📝 <b>${p.q}</b></span><span>⏱️ <b>${p.time}</b></span></div>
+  </div>`).join('');
+}
+
+</script>
+</body>
+</html>
